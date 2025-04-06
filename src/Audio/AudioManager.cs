@@ -58,6 +58,10 @@ namespace NEP.ScoreLab.Audio
 
         public void Play(AudioClip clip)
         {
+#if DEBUG
+            BoneLib.Audio.Play2DOneShot(clip, BoneLib.Audio.InHead);
+            return;
+#endif
             GameObject inactiveSource = GetFirstInactive();
             AudioSource source = inactiveSource.GetComponent<AudioSource>();
 
