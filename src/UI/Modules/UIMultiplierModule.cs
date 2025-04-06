@@ -1,9 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-
-using TMPro;
-
-using NEP.ScoreLab.Core;
+﻿using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
 
 namespace NEP.ScoreLab.UI

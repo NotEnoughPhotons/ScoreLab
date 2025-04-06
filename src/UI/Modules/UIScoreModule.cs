@@ -1,10 +1,5 @@
-using UnityEngine;
-using UnityEngine.UI;
-
 using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
-
-using TMPro;
 
 namespace NEP.ScoreLab.UI
 {

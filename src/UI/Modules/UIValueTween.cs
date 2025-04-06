@@ -12,7 +12,7 @@ namespace NEP.ScoreLab.UI
         public int Value;
         public int TargetValue;
         public int Rate = 2;
-        public TMPro.TextMeshProUGUI text;
+        public Il2CppTMPro.TextMeshProUGUI text;
 
         private int _targetValue;
         private int _previousValue;
@@ -20,7 +20,7 @@ namespace NEP.ScoreLab.UI
 
         private void Awake()
         {
-            text = GetComponent<TMPro.TextMeshProUGUI>();
+            text = GetComponent<Il2CppTMPro.TextMeshProUGUI>();
         }
 
         public void SetValue(int value)
