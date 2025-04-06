@@ -1,3 +1,4 @@
+using MelonLoader.Utils;
 using Newtonsoft.Json;
 
 using UnityEngine;
@@ -407,19 +408,18 @@ namespace NEP.ScoreLab.Data
             }
         }
 
-        static readonly string Path_UserData = MelonLoader.MelonUtils.UserDataDirectory + "/";
-        static readonly string Path_Developer = Path_UserData + "Not Enough Photons/";
-        static readonly string Path_Mod = Path_Developer + "ScoreLab/";
-        static readonly string Path_CustomUIs = Path_Mod + "Custom UIs/";
-        static readonly string Path_SFX = Path_Mod + "SFX/";
+        static readonly string Path_Developer      = Path.Combine(MelonEnvironment.UserDataDirectory, "Not Enough Photons");
+        static readonly string Path_Mod            = Path.Combine(Path_Developer, "ScoreLab");
+        static readonly string Path_CustomUIs      = Path.Combine(Path_Mod, "Custom UIs");
+        static readonly string Path_SFX            = Path.Combine(Path_Mod + "SFX");
 
-        static readonly string Path_ScoreData = Path_Mod + "Data/Score/";
-        static readonly string Path_MultiplierData = Path_Mod + "Data/Multiplier/";
-        static readonly string Path_HighScoreData = Path_Mod + "Data/High Score/";
+        static readonly string Path_ScoreData      = Path.Combine(Path_Mod, "Data/Score");
+        static readonly string Path_MultiplierData = Path.Combine(Path_Mod, "Data/Multiplier");
+        static readonly string Path_HighScoreData  = Path.Combine(Path_Mod, "Data/High Score");
 
-        static readonly string File_HighScores = Path_HighScoreData + "high_score_table.json";
-        static readonly string File_HUDSettings = Path_Mod + "sl_hud_settings.json";
-        static readonly string File_CurrentHUD = Path_Mod + "sl_current_hud.txt";
+        static readonly string File_HighScores     = Path.Combine(Path_HighScoreData, "high_score_table.json");
+        static readonly string File_HUDSettings    = Path.Combine(Path_Mod, "sl_hud_settings.json");
+        static readonly string File_CurrentHUD     = Path.Combine(Path_Mod, "sl_current_hud.txt");
 
         public static void Init()
         {
