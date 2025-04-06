@@ -1,14 +1,11 @@
-﻿using System;
-
-using NEP.ScoreLab.Data;
+﻿using NEP.ScoreLab.Data;
 
 using HarmonyLib;
 
-using SLZ.Rig;
-
-using SLZ.Marrow.SceneStreaming;
-using SLZ.Marrow.Utilities;
-using SLZ.Marrow.Warehouse;
+using Il2CppSLZ.Marrow;
+using Il2CppSLZ.Marrow.SceneStreaming;
+using Il2CppSLZ.Marrow.Utilities;
+using Il2CppSLZ.Marrow.Warehouse;
 
 namespace NEP.ScoreLab.Patches
 {

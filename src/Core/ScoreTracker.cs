@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using NEP.ScoreLab.Data;
 
 namespace NEP.ScoreLab.Core

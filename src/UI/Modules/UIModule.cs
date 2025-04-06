@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-using TMPro;
+using Il2CppTMPro;
 
 using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;

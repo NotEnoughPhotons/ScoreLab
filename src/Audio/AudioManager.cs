@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 using NEP.ScoreLab.Core;
@@ -10,7 +8,7 @@ namespace NEP.ScoreLab.Audio
     [MelonLoader.RegisterTypeInIl2Cpp]
     public class AudioManager : MonoBehaviour
     {
-        public AudioManager(System.IntPtr ptr) : base(ptr) { }
+        public AudioManager(IntPtr ptr) : base(ptr) { }
 
         public static AudioManager Instance { get; private set; }
 

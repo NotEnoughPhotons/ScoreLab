@@ -1,6 +1,6 @@
 namespace NEP.ScoreLab.Data
 {
-    [System.Serializable]
+    [Serializable]
     public class PackedValue
     {
         public enum PackedType

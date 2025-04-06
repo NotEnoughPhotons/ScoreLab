@@ -7,7 +7,7 @@ namespace NEP.ScoreLab.Audio
     [MelonLoader.RegisterTypeInIl2Cpp]
     public class PooledAudio : MonoBehaviour
     {
-        public PooledAudio(System.IntPtr ptr) : base(ptr) { }
+        public PooledAudio(IntPtr ptr) : base(ptr) { }
 
         private AudioSource source;
         private float time;

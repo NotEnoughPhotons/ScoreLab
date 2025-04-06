@@ -1,10 +1,10 @@
-﻿using BoneLib;
-using NEP.ScoreLab.Data;
-using PuppetMasta;
-using System.Reflection;
+﻿using NEP.ScoreLab.Data;
 
-using SLZ.Rig;
-using SLZ.Vehicle;
+using BoneLib;
+
+using Il2CppSLZ.Bonelab;
+using Il2CppSLZ.Marrow;
+using Il2CppSLZ.Marrow.PuppetMasta;
 
 namespace NEP.ScoreLab.Core
 {
