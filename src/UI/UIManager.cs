@@ -44,24 +44,17 @@ namespace NEP.ScoreLab.UI
 
         public void LoadHUD(string name)
         {
-            MelonLoader.MelonLogger.Msg(1);
             UnloadHUD();
-            MelonLoader.MelonLogger.Msg(2);
             foreach (var _controller in LoadedUIs)
             {
-                MelonLoader.MelonLogger.Msg(3);
                 if (DataManager.UI.GetHUDName(_controller.gameObject) == name)
                 {
-                    MelonLoader.MelonLogger.Msg(4);
                     ActiveUI = _controller;
-                    MelonLoader.MelonLogger.Msg(6);
                     break;
                 }
             }
 
-            MelonLoader.MelonLogger.Msg(7);
             ActiveUI.gameObject.SetActive(true);
-            MelonLoader.MelonLogger.Msg(8);
             ActiveUI.SetParent(null);
         }
 

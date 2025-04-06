@@ -107,7 +107,5 @@ namespace NEP.ScoreLab.Patches
         {
             Game.Initialize();
         }
-
-        
     }
 }
