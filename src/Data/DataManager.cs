@@ -411,7 +411,7 @@ namespace NEP.ScoreLab.Data
         static readonly string Path_Developer      = Path.Combine(MelonEnvironment.UserDataDirectory, "Not Enough Photons");
         static readonly string Path_Mod            = Path.Combine(Path_Developer, "ScoreLab");
         static readonly string Path_CustomUIs      = Path.Combine(Path_Mod, "Custom UIs");
-        static readonly string Path_SFX            = Path.Combine(Path_Mod + "SFX");
+        static readonly string Path_SFX            = Path.Combine(Path_Mod, "SFX");
 
         static readonly string Path_ScoreData      = Path.Combine(Path_Mod, "Data/Score");
         static readonly string Path_MultiplierData = Path.Combine(Path_Mod, "Data/Multiplier");
