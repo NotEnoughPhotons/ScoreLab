@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 using NEP.ScoreLab.Data;
 using NEP.ScoreLab.UI;
 
@@ -44,6 +41,7 @@ namespace NEP.ScoreLab.Core
                 { "IsPlayerMoving", new Func<bool>(() => ScoreDirector.IsPlayerMoving) },
                 { "IsPlayerSeated", new Func<bool>(() => ScoreDirector.IsPlayerSeated) },
                 { "IsPlayerInAir", new Func<bool>(() => ScoreDirector.IsPlayerInAir) },
+                { "IsPlayerRagdolled", new Func<bool>(() => ScoreDirector.IsPlayerRagdolled) }
             };
 
             public static Func<bool> GetCondition(string cond)

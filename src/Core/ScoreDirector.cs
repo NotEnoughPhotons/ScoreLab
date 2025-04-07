@@ -57,9 +57,13 @@ namespace NEP.ScoreLab.Core
             [HarmonyLib.HarmonyPatch(nameof(PhysicsRig.OnUpdate))]
             public static class PhysRigPatch
             {
-                private static bool _targetBool;
+                private static bool _midAirTargetBool;
                 private static float _tMidAirDelay = 0.5f;
-                private static float _tTime;
+                private static float _tAirTime;
+
+                private static bool _ragdolledTargetBool;
+                private static float _tRagdollDelay = 0.5f;
+                private static float _tRagdollTime;
 
                 public static void Postfix(PhysicsRig __instance)
                 {
@@ -67,22 +71,42 @@ namespace NEP.ScoreLab.Core
 
                     if (IsPlayerInAir)
                     {
-                        if (!_targetBool)
+                        if (!_midAirTargetBool)
                         {
-                            _tTime += UnityEngine.Time.deltaTime;
+                            _tAirTime += UnityEngine.Time.deltaTime;
 
-                            if(_tTime > _tMidAirDelay)
+                            if(_tAirTime > _tMidAirDelay)
                             {
                                 ScoreTracker.Instance.Add(EventType.Mult.MidAir);
-                                _targetBool = true;
+                                _midAirTargetBool = true;
                             }
                         }
                     }
                     else
                     {
-                        _tTime = 0f;
-                        _targetBool = false;
+                        _tAirTime = 0f;
+                        _midAirTargetBool = false;
                     }
+                }
+            }
+
+            [HarmonyLib.HarmonyPatch(typeof(PhysicsRig))]
+            [HarmonyLib.HarmonyPatch(nameof(PhysicsRig.RagdollRig))]
+            public static class PhysRigRagdollPatch
+            {
+                public static void Postfix(PhysicsRig __instance)
+                {
+                    IsPlayerRagdolled = true;
+                }
+            }
+
+            [HarmonyLib.HarmonyPatch(typeof(PhysicsRig))]
+            [HarmonyLib.HarmonyPatch(nameof(PhysicsRig.UnRagdollRig))]
+            public static class PhysRigUnRagdollPatch
+            {
+                public static void Postfix(PhysicsRig __instance)
+                {
+                    IsPlayerRagdolled = false;
                 }
             }
 
@@ -106,5 +130,6 @@ namespace NEP.ScoreLab.Core
         public static bool IsPlayerMoving = false;
         public static bool IsPlayerInAir = false;
         public static bool IsPlayerSeated = false;
+        public static bool IsPlayerRagdolled = false;
     }
 }

@@ -18,6 +18,7 @@ namespace NEP.ScoreLab.Data
             public static readonly string MidAir = "MULT_MIDAIR";
             public static readonly string Seated = "MULT_SEATED";
             public static readonly string SecondWind = "MULT_SECONDWIND";
+            public static readonly string Ragolled = "MULT_RAGDOLLED";
         }
     }
 }
