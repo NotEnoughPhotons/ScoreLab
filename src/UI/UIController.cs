@@ -52,7 +52,7 @@ namespace NEP.ScoreLab.UI
         {
             if(BoneLib.Player.GetPhysicsRig() != null)
             {
-                followTarget = BoneLib.Player.GetPhysicsRig().m_chest;
+                followTarget = BoneLib.Player.GetPhysicsRig().m_head;
             }
         }
         
