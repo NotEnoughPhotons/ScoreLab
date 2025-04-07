@@ -103,6 +103,23 @@ namespace NEP.ScoreLab.Core
             _multiplier += multiplier;
         }
 
+        public void ResetScore()
+        {
+            _score = 0;
+            _lastScore = 0;
+            _scoreDifference = 0;
+        }
+
+        public void ResetMultiplier()
+        {
+            _multiplier = 1f;
+        }
+
+        public void ResetHighScore()
+        {
+
+        }
+
         public void RemoveMultiplier(float multiplier)
         {
             if (_multiplier < _baseMultiplier)
