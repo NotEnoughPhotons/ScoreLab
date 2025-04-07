@@ -10,6 +10,14 @@ namespace NEP.ScoreLab.UI
 
         private PackedMultiplier _packedMultiplier { get => (PackedMultiplier)_packedValue; }
 
+        private void Awake()
+        {
+            if (name == "MultiplierDescriptor")
+            {
+                ModuleType = UIModuleType.Descriptor;
+            }
+        }
+
         public override void OnModuleEnable()
         {
             base.OnModuleEnable();

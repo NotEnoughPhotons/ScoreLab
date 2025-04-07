@@ -10,6 +10,14 @@ namespace NEP.ScoreLab.UI
 
         private PackedScore _packedScore { get => (PackedScore)_packedValue; }
 
+        private void Awake()
+        {
+            if (name == "ScoreDescriptor")
+            {
+                ModuleType = UIModuleType.Descriptor;
+            }
+        }
+
         public override void OnModuleEnable()
         {
             base.OnModuleEnable();

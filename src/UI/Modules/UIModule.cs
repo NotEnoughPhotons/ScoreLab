@@ -174,7 +174,7 @@ namespace NEP.ScoreLab.UI
             _tDecay -= Time.deltaTime;
         }
 
-        private void Awake()
+        private void Start()
         {
             Transform titleTran = transform.Find(Path_TitleText);
             Transform valueTran = transform.Find(Path_ValueText);

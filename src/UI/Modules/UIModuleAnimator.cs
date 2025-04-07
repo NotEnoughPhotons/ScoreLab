@@ -51,7 +51,14 @@ namespace NEP.ScoreLab.UI
                 return;
             }
 
-            PlayAnimation("show");
+            if (_module.ModuleType == UIModule.UIModuleType.Descriptor)
+            {
+                PlayAnimation("descriptor_show");
+            }
+            else
+            {
+                PlayAnimation("show");
+            }
         }
 
         private void OnTierReached()
@@ -66,7 +73,14 @@ namespace NEP.ScoreLab.UI
                 return;
             }
 
-            PlayAnimation("hide");
+            if (_module.ModuleType == UIModule.UIModuleType.Descriptor)
+            {
+                PlayAnimation("descriptor_hide");
+            }
+            else
+            {
+                PlayAnimation("hide");
+            }
         }
     }
 }

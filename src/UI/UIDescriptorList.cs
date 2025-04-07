@@ -24,6 +24,12 @@ namespace NEP.ScoreLab.UI
         {
             Modules = new List<UIModule>();
             ActiveModules = new List<UIModule>();
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Transform child = transform.GetChild(i);
+                Modules.Add(child.GetComponent<UIModule>());
+            }
         }
 
         private void OnEnable()
