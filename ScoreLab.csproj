@@ -14,6 +14,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 	<ItemGroup>
+	  <EmbeddedResource Remove="Properties\**" />
+	  <None Remove="Properties\**" />
+	</ItemGroup>
+	<ItemGroup>
 	  <Compile Include="src\Audio\AudioManager.cs" />
 	  <Compile Include="src\Audio\PooledAudio.cs" />
 	  <Compile Include="src\Core\API.cs" />
@@ -46,6 +50,9 @@
 		</Reference>
 		<Reference Include="BoneLib">
 		  <HintPath>$(BONELAB_DIR)\Mods\BoneLib.dll</HintPath>
+		</Reference>
+		<Reference Include="NEDebug">
+			<HintPath>$(BONELAB_DIR)\Mods\NEDebug.dll</HintPath>
 		</Reference>
 		<Reference Include="AudioImportLib">
 			<HintPath>$(BONELAB_DIR)\Mods\AudioImportLib.dll</HintPath>
