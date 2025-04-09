@@ -23,6 +23,7 @@
 	  <Compile Include="src\Core\API.cs" />
 	  <Compile Include="src\Core\ScoreDirector.cs" />
 	  <Compile Include="src\Core\ScoreTracker.cs" />
+	  <Compile Include="src\Core\Settings.cs" />
 	  <Compile Include="src\Data\DataManager.cs" />
 	  <Compile Include="src\Data\JSON\JSONMult.cs" />
 	  <Compile Include="src\Data\JSON\JSONScore.cs" />
@@ -33,6 +34,7 @@
 	  <Compile Include="src\Data\Packages\PackedScore.cs" />
 	  <Compile Include="src\Data\Packages\PackedValue.cs" />
 	  <Compile Include="src\Main.cs" />
+	  <Compile Include="src\Menu\Menu.cs" />
 	  <Compile Include="src\Patches\Hooks.cs" />
 	  <Compile Include="src\UI\Modules\UIModule.cs" />
 	  <Compile Include="src\UI\Modules\UIModuleAnimator.cs" />
