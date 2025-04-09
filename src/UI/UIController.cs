@@ -14,9 +14,6 @@ namespace NEP.ScoreLab.UI
         public UIModule MultiplierModule { get; set; }
         public UIModule HighScoreModule { get; set; }
 
-        public float Distance = 1f;
-        public float Lerp = 24f;
-
         public Transform followTarget;
 
         private void Awake()
@@ -64,7 +61,7 @@ namespace NEP.ScoreLab.UI
                 return;
             }
 
-            Vector3 move = Vector3.Lerp(transform.position, followTarget.position + followTarget.forward * Distance, Lerp * Time.deltaTime);
+            Vector3 move = Vector3.Lerp(transform.position, followTarget.position + followTarget.forward * Settings.DistanceToCamera, Settings.DistanceToCamera * Time.deltaTime);
             Quaternion lookRot = Quaternion.LookRotation(followTarget.forward);
 
             transform.position = move;

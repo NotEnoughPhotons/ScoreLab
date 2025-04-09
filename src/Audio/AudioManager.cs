@@ -50,6 +50,11 @@ namespace NEP.ScoreLab.Audio
 
         private void OnValueReceived(PackedValue value)
         {
+            if (!Settings.UseAnnouncer)
+            {
+                return;
+            }
+            
             if(value.EventAudio != null)
             {
                 Play(value.EventAudio);

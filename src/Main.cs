@@ -5,6 +5,7 @@ using UnityEngine;
 using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
 using NEP.ScoreLab.Patches;
+using NEP.ScoreLab.Menu;
 
 [assembly: MelonInfo(typeof(NEP.ScoreLab.Main), "ScoreLab", "1.0.0", "Not Enough Photons")]
 [assembly: MelonGame("Stress Level Zero", "BONELAB")]
@@ -28,6 +29,8 @@ namespace NEP.ScoreLab
 
             Hooks.Game.OnMarrowGameStarted += OnMarrowGameStarted;
             Hooks.Game.OnMarrowSceneLoaded += OnMarrowSceneLoaded;
+            
+            SLMenu.Initialize();
         }
 
         public void OnMarrowGameStarted()
