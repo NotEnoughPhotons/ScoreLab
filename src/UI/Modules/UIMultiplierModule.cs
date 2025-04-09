@@ -16,6 +16,10 @@ namespace NEP.ScoreLab.UI
             {
                 ModuleType = UIModuleType.Descriptor;
             }
+            else if (name == "Main_Multiplier")
+            {
+                ModuleType = UIModuleType.Main;
+            }
         }
 
         public override void OnModuleEnable()
@@ -67,7 +71,7 @@ namespace NEP.ScoreLab.UI
                 else
                 {
                     _timeBar.gameObject.SetActive(true);
-                    SetMaxValueToBar(_timeBar, _packedMultiplier.Elapsed);
+                    SetBarValue(_timeBar, _packedMultiplier.Elapsed);
                 }
             }
         }
