@@ -60,14 +60,6 @@ namespace NEP.ScoreLab.Core
             }
         }
 
-        public static class Settings
-        {
-            public static class Audio
-            {
-                public static bool PlayTierAudio = true;
-            }
-        }
-
         public static class UI
         {
             public static Action<UIModule> OnModuleEnabled;
