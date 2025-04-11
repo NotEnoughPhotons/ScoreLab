@@ -128,7 +128,7 @@ namespace NEP.ScoreLab.Core
                     {
                         if (!_ragdolledTargetBool)
                         {
-                            ScoreTracker.Instance.Add(Data.EventType.Mult.Ragolled);
+                            // ScoreTracker.Instance.Add(Data.EventType.Mult.Ragolled);
                             _ragdolledTargetBool = true;
                         }
                     }

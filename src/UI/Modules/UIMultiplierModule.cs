@@ -71,7 +71,8 @@ namespace NEP.ScoreLab.UI
                 else
                 {
                     _timeBar.gameObject.SetActive(true);
-                    SetBarValue(_timeBar, _packedMultiplier.Elapsed);
+                    SetMaxValueToBar(_timeBar, _packedMultiplier.DecayTime);
+                    SetBarValue(_timeBar, _packedMultiplier.DecayTime);
                 }
             }
         }
