@@ -1,3 +1,6 @@
+using Il2CppSystem.Reflection;
+using UnityEngine;
+
 using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
 
@@ -10,6 +13,10 @@ namespace NEP.ScoreLab.UI
 
         private PackedScore _packedScore { get => (PackedScore)_packedValue; }
 
+        private float _targetValue;
+        private float _currentValue;
+        private float _rate;
+        
         private void Awake()
         {
             if (name == "ScoreDescriptor")
@@ -22,23 +29,17 @@ namespace NEP.ScoreLab.UI
         {
             base.OnModuleEnable();
 
+            if (ModuleType == UIModuleType.Main)
+            {
+                SetText(_value, ScoreTracker.Instance.Score);
+            }
+            
             if (_packedValue == null)
             {
                 return;
             }
-
-            if (ModuleType == UIModuleType.Main)
-            {
-                if (_valueTween != null)
-                {
-                    _valueTween.SetValue(ScoreTracker.Instance.Score);
-                }
-                else
-                {
-                    SetText(_value, ScoreTracker.Instance.Score);
-                }
-            }
-            else if (ModuleType == UIModuleType.Descriptor)
+            
+            if (ModuleType == UIModuleType.Descriptor)
             {
                 if (PackedValue.Stackable)
                 {
@@ -69,6 +70,24 @@ namespace NEP.ScoreLab.UI
         public override void OnUpdate()
         {
             UpdateDecay();
+
+            if (ModuleType == UIModuleType.Main)
+            { 
+                SetTweenValue(ScoreTracker.Instance.Score);
+                _currentValue = Mathf.MoveTowards(_currentValue, _targetValue, _rate * Time.unscaledDeltaTime);
+                if (Mathf.Approximately(_currentValue, _targetValue))
+                {
+                    _currentValue = _targetValue;
+                }
+                
+                SetText(_value, _currentValue.ToString("N0"));
+            }
+        }
+
+        private void SetTweenValue(int value)
+        {
+            _targetValue = value;
+            _rate = Mathf.Abs(_targetValue - _currentValue) / 1.0f;
         }
     }
 }

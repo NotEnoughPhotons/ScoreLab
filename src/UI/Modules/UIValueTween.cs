@@ -15,8 +15,8 @@ namespace NEP.ScoreLab.UI
         public Il2CppTMPro.TextMeshProUGUI text;
 
         private int _targetValue;
-        private int _previousValue;
         private int _value;
+        private int _rate;
 
         private void Awake()
         {
@@ -25,26 +25,15 @@ namespace NEP.ScoreLab.UI
 
         public void SetValue(int value)
         {
-            _previousValue = Value;
             _targetValue = value;
-            _value = _previousValue;
-
             TargetValue = _targetValue;
+            _rate = (int)(Mathf.Abs(_targetValue - _value) / 0.5f);
         }
 
         public void Tween()
         {
-            if (_value < _targetValue)
-            {
-                _value += Mathf.CeilToInt(Time.unscaledDeltaTime) * Rate;
-            }
-
-            if (_value >= _targetValue)
-            {
-                _value = _targetValue;
-            }
-
-            Value = _value;
+            _value = (int)Mathf.MoveTowards(_value, _targetValue, _rate * Time.deltaTime);
+            text.text = _value.ToString();
         }
 
         private void Update()
