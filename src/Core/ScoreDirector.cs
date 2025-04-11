@@ -1,10 +1,14 @@
-﻿using NEP.ScoreLab.Data;
+﻿using UnityEngine;
+
+using NEP.ScoreLab.Data;
 
 using BoneLib;
 
 using Il2CppSLZ.Bonelab;
 using Il2CppSLZ.Marrow;
 using Il2CppSLZ.Marrow.PuppetMasta;
+using Il2CppSLZ.Marrow.AI;
+using Avatar = Il2CppSLZ.VRMK.Avatar;
 
 namespace NEP.ScoreLab.Core
 {
@@ -12,6 +16,38 @@ namespace NEP.ScoreLab.Core
     {
         public static class Patches
         {
+            [HarmonyLib.HarmonyPatch(typeof(RigManager))]
+            [HarmonyLib.HarmonyPatch(nameof(RigManager.SwapAvatar))]
+            public static class RigManagerSwapAvatarPatch
+            {
+                public static void Postfix(RigManager __instance, Avatar avatar)
+                {
+                    _playerRecentlySwappedAvatars = true;
+                }
+            }
+            
+            [HarmonyLib.HarmonyPatch(typeof(BehaviourCrablet))]
+            [HarmonyLib.HarmonyPatch(nameof(BehaviourCrablet.AttachToFace))]
+            public static class CrabletAttachToFacePatch
+            {
+                public static void Postfix(Rigidbody face, TriggerRefProxy trp, bool preAttach = false, bool isPlayer = true)
+                {
+                    if (isPlayer)
+                    {
+                        return;
+                    }
+
+                    if (trp.npcType == TriggerRefProxy.NpcType.Crablet)
+                    {
+                        ScoreTracker.Instance.Add(Data.EventType.Score.Crabcest);
+                    }
+                    else
+                    {
+                        ScoreTracker.Instance.Add(Data.EventType.Score.Facehug);
+                    }
+                }
+            }
+            
             [HarmonyLib.HarmonyPatch(typeof(Seat))]
             [HarmonyLib.HarmonyPatch(nameof(Seat.Register))]
             public static class RegisterSeatPatch
@@ -19,7 +55,7 @@ namespace NEP.ScoreLab.Core
                 public static void Postfix(RigManager rM)
                 {
                     IsPlayerSeated = true;
-                    ScoreTracker.Instance.Add(EventType.Mult.Seated);
+                    ScoreTracker.Instance.Add(Data.EventType.Mult.Seated);
                 }
             }
 
@@ -39,17 +75,17 @@ namespace NEP.ScoreLab.Core
             {
                 public static void Postfix()
                 {
-                    ScoreTracker.Instance.Add(EventType.Mult.SecondWind);
+                    ScoreTracker.Instance.Add(Data.EventType.Mult.SecondWind);
                 }
             }
 
-            [HarmonyLib.HarmonyPatch(typeof(Arena_GameController))]
-            [HarmonyLib.HarmonyPatch(nameof(Arena_GameController.EndOfRound))]
+            [HarmonyLib.HarmonyPatch(typeof(Arena_Stats))]
+            [HarmonyLib.HarmonyPatch(nameof(Arena_Stats.RoundAchieved))]
             public static class EndOfRoundPatch
             {
                 public static void Postfix()
                 {
-                    ScoreTracker.Instance.Add(EventType.Score.GameRoundCompleted);
+                    ScoreTracker.Instance.Add(Data.EventType.Score.GameRoundCompleted);
                 }
             }
 
@@ -77,7 +113,7 @@ namespace NEP.ScoreLab.Core
 
                             if(_tAirTime > _tMidAirDelay)
                             {
-                                ScoreTracker.Instance.Add(EventType.Mult.MidAir);
+                                ScoreTracker.Instance.Add(Data.EventType.Mult.MidAir);
                                 _midAirTargetBool = true;
                             }
                         }
@@ -86,6 +122,25 @@ namespace NEP.ScoreLab.Core
                     {
                         _tAirTime = 0f;
                         _midAirTargetBool = false;
+                    }
+
+                    if (IsPlayerRagdolled)
+                    {
+                        if (!_ragdolledTargetBool)
+                        {
+                            ScoreTracker.Instance.Add(Data.EventType.Mult.Ragolled);
+                            _ragdolledTargetBool = true;
+                        }
+                    }
+                    else
+                    {
+                        _ragdolledTargetBool = false;
+                    }
+
+                    if (_playerRecentlySwappedAvatars)
+                    {
+                        ScoreTracker.Instance.Add(Data.EventType.Mult.SwappedAvatars);
+                        _playerRecentlySwappedAvatars = false;
                     }
                 }
             }
@@ -119,11 +174,11 @@ namespace NEP.ScoreLab.Core
             {
                 if(!behaviour.sensors.isGrounded)
                 {
-                    ScoreTracker.Instance.Add(EventType.Score.EnemyMidAirKill);
+                    ScoreTracker.Instance.Add(Data.EventType.Score.EnemyMidAirKill);
                 }
 
-                ScoreTracker.Instance.Add(EventType.Score.Kill);
-                ScoreTracker.Instance.Add(EventType.Mult.Kill);
+                ScoreTracker.Instance.Add(Data.EventType.Score.Kill);
+                ScoreTracker.Instance.Add(Data.EventType.Mult.Kill);
             }
         }
 
@@ -131,5 +186,7 @@ namespace NEP.ScoreLab.Core
         public static bool IsPlayerInAir = false;
         public static bool IsPlayerSeated = false;
         public static bool IsPlayerRagdolled = false;
+
+        private static bool _playerRecentlySwappedAvatars = false;
     }
 }
