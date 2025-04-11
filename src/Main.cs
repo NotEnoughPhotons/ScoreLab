@@ -44,6 +44,10 @@ namespace NEP.ScoreLab
         {
             new GameObject("[ScoreLab] - UI Manager").AddComponent<UI.UIManager>();
             new GameObject("[ScoreLab] - Audio Manager").AddComponent<Audio.AudioManager>();
+            
+            // TODO: Add high scores, and add an option to reset level progress
+            ScoreTracker.Instance.ResetScore();
+            ScoreTracker.Instance.ResetMultiplier();
         }
 
         public override void OnUpdate()
