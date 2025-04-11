@@ -11,11 +11,15 @@ namespace NEP.ScoreLab.UI
     {
         public UIManager(System.IntPtr ptr) : base(ptr) { }
 
+        public static UIManager Instance { get; private set; }
+        
         public List<UIController> LoadedUIs { get; private set; }
         public UIController ActiveUI { get; private set; }
 
         private void Awake()
         {
+            Instance = this;
+            
             LoadedUIs = new List<UIController>();
 
             for(int i = 0; i < DataManager.UI.LoadedUIObjects.Count; i++)
