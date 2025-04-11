@@ -49,7 +49,7 @@ namespace NEP.ScoreLab.UI
         {
             if(BoneLib.Player.GetPhysicsRig() != null)
             {
-                followTarget = BoneLib.Player.GetPhysicsRig().m_head;
+                followTarget = BoneLib.Player.ControllerRig.m_head;
             }
         }
         
@@ -61,7 +61,7 @@ namespace NEP.ScoreLab.UI
                 return;
             }
 
-            Vector3 move = Vector3.Lerp(transform.position, followTarget.position + followTarget.forward * Settings.DistanceToCamera, Settings.DistanceToCamera * Time.deltaTime);
+            Vector3 move = Vector3.Lerp(transform.position, followTarget.position + followTarget.forward * Settings.DistanceToCamera, Settings.MovementSmoothness * Time.deltaTime);
             Quaternion lookRot = Quaternion.LookRotation(followTarget.forward);
 
             transform.position = move;
