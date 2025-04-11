@@ -10,7 +10,6 @@ namespace NEP.ScoreLab.UI
         public UIModuleAnimator(System.IntPtr ptr) : base(ptr) { }
 
         public Animator Animator;
-        public Animation Animation;
 
         private UIModule _module;
 
@@ -40,8 +39,8 @@ namespace NEP.ScoreLab.UI
             {
                 return;
             }
-
-            Animator.Play(name);
+            
+            Animator.Play(name, -1, 0f);
         }
 
         private void OnModuleEnabled(UIModule module)
