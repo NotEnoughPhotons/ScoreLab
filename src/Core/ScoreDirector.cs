@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 
-using NEP.ScoreLab.Data;
-
 using BoneLib;
 
 using Il2CppSLZ.Bonelab;
 using Il2CppSLZ.Marrow;
 using Il2CppSLZ.Marrow.PuppetMasta;
 using Il2CppSLZ.Marrow.AI;
+
 using Avatar = Il2CppSLZ.VRMK.Avatar;
 
 namespace NEP.ScoreLab.Core
@@ -16,11 +15,10 @@ namespace NEP.ScoreLab.Core
     {
         public static class Patches
         {
-            [HarmonyLib.HarmonyPatch(typeof(RigManager))]
-            [HarmonyLib.HarmonyPatch(nameof(RigManager.SwapAvatar))]
+            [HarmonyLib.HarmonyPatch(typeof(RigManager), nameof(RigManager.SwitchAvatar))]
             public static class RigManagerSwapAvatarPatch
             {
-                public static void Postfix(RigManager __instance, Avatar avatar)
+                public static void Postfix(Avatar newAvatar)
                 {
                     _playerRecentlySwappedAvatars = true;
                 }
@@ -181,7 +179,7 @@ namespace NEP.ScoreLab.Core
                 ScoreTracker.Instance.Add(Data.EventType.Mult.Kill);
             }
         }
-
+        
         public static bool IsPlayerMoving = false;
         public static bool IsPlayerInAir = false;
         public static bool IsPlayerSeated = false;
