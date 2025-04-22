@@ -23,8 +23,12 @@ namespace NEP.ScoreLab
 
     public class Main : MelonMod
     {
+        internal static MelonLogger.Instance Logger;
+        
         public override void OnLateInitializeMelon()
         {
+            Logger = new MelonLogger.Instance("ScoreLab");
+            
             Hooks.Initialize();
 
             Hooks.Game.OnMarrowGameStarted += OnMarrowGameStarted;

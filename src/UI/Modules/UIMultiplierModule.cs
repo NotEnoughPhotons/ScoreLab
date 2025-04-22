@@ -38,7 +38,7 @@ namespace NEP.ScoreLab.UI
 
             if (ModuleType == UIModuleType.Main)
             {
-                SetText(_value, ScoreTracker.Instance.Multiplier.ToString());
+                SetText(_value, $"{ScoreTracker.Instance.Multiplier.ToString()}x");
             }
             else if (ModuleType == UIModuleType.Descriptor)
             {
@@ -47,18 +47,18 @@ namespace NEP.ScoreLab.UI
                     if (PackedValue.TierEventType != null)
                     {
                         SetText(_title, _packedMultiplier.Name);
-                        SetText(_value, _packedMultiplier.Multiplier);
+                        SetText(_value, $"{_packedMultiplier.Multiplier.ToString()}x");
                     }
                     else
                     {
                         SetText(_title, _packedMultiplier.Name);
-                        SetText(_value, _packedMultiplier.AccumulatedMultiplier);
+                        SetText(_value, $"{_packedMultiplier.AccumulatedMultiplier.ToString()}x");
                     }
                 }
                 else
                 {
                     SetText(_title, _packedMultiplier.Name);
-                    SetText(_value, _packedMultiplier.Multiplier);
+                    SetText(_value, $"{_packedMultiplier.Multiplier.ToString()}x");
                 }
             }
 

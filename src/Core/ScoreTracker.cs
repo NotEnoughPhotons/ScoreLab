@@ -1,4 +1,6 @@
 using NEP.ScoreLab.Data;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace NEP.ScoreLab.Core
 {
@@ -46,6 +48,11 @@ namespace NEP.ScoreLab.Core
 
         public void Update()
         {
+            if (Input.GetKeyDown(KeyCode.RightBracket))
+            {
+                Add(DataManager.PackedValues.Get(Data.EventType.Mult.Kill));
+            }
+            
             for (int i = 0; i < ActiveValues.Count; i++)
             {
                 ActiveValues[i].OnUpdate();
@@ -83,8 +90,9 @@ namespace NEP.ScoreLab.Core
             {
                 ActiveValues.Remove(value);
                 PackedMultiplier mult = value as PackedMultiplier;
-                RemoveMultiplier(mult.AccumulatedMultiplier);
 
+                RemoveMultiplier(mult.AccumulatedMultiplier);
+                
                 value.OnValueRemoved();
 
                 API.Value.OnValueRemoved?.Invoke(value);
@@ -101,6 +109,11 @@ namespace NEP.ScoreLab.Core
         public void AddMultiplier(float multiplier)
         {
             _multiplier += multiplier;
+        }
+
+        public void SetMultiplier(float multiplier)
+        {
+            _multiplier = multiplier;
         }
 
         public void ResetScore()
@@ -170,7 +183,6 @@ namespace NEP.ScoreLab.Core
                 parent.SetDecayTime(currentTier.DecayTime);
 
                 AddScore(currentTier.Score);
-
             }
             else if (score.Stackable)
             {
@@ -213,21 +225,17 @@ namespace NEP.ScoreLab.Core
 
             if (multiplier.Tiers != null)
             {
-                var _multInList = GetClone<PackedMultiplier>(multiplier);
-                _multInList.ToNextTier();
+                var parent = GetClone<PackedMultiplier>(multiplier);
+                var currentTier = (PackedMultiplier)parent.CurrentTier;
 
-                if (_multInList.TierRequirementIndex <= _multInList.TierRequirement - 1)
-                {
-                    return;
-                }
+                parent.ToNextTier();
+                parent.TierRequirement = currentTier.TierRequirement;
+                parent.SetDecayTime(currentTier.DecayTime);
 
-                var _tier = (PackedMultiplier)_multInList.CurrentTier;
-                _multInList.TierRequirement = _tier.TierRequirement;
-
-                _multInList.SetDecayTime(_tier.DecayTime);
-
-                AddMultiplier(_tier.Multiplier);
-                API.Value.OnValueTierReached?.Invoke(_tier);
+                AddMultiplier(currentTier.Multiplier);
+                multiplier.AccumulatedMultiplier += currentTier.Multiplier;
+                Main.Logger.Msg("Current accumulated multiplier: " + multiplier.AccumulatedMultiplier);
+                API.Value.OnValueTierReached?.Invoke(currentTier);
             }
             else if (multiplier.Stackable)
             {

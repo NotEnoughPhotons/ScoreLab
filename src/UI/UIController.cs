@@ -31,18 +31,21 @@ namespace NEP.ScoreLab.UI
 
         private void OnEnable()
         {
-            UpdateModule(null, ScoreModule);
+            UpdateModule(null);
+            UpdateModule(null);
 
-            API.Value.OnValueAdded += (data) => UpdateModule(data, ScoreModule);
-            API.Value.OnValueTierReached += (data) => UpdateModule(data, ScoreModule);
-            API.Value.OnValueAccumulated += (data) => UpdateModule(data, ScoreModule);
+            API.Value.OnValueAdded += UpdateModule;
+            API.Value.OnValueTierReached += UpdateModule;
+            API.Value.OnValueAccumulated += UpdateModule;
+            API.Value.OnValueRemoved += UpdateModule;
         }
 
         private void OnDisable()
         {
-            API.Value.OnValueAdded -= (data) => UpdateModule(data, ScoreModule);
-            API.Value.OnValueTierReached -= (data) => UpdateModule(data, ScoreModule);
-            API.Value.OnValueAccumulated -= (data) => UpdateModule(data, ScoreModule);
+            API.Value.OnValueAdded -= UpdateModule;
+            API.Value.OnValueTierReached -= UpdateModule;
+            API.Value.OnValueAccumulated -= UpdateModule;
+            API.Value.OnValueRemoved -= UpdateModule;
         }
 
         private void Start()
@@ -91,16 +94,17 @@ namespace NEP.ScoreLab.UI
             this.MultiplierModule = module;
         }
 
-        public void UpdateModule(PackedValue data, UIModule module)
+        public void UpdateModule(PackedValue data)
         {
-            try
+            if (data is PackedScore)
             {
-                module.AssignPackedData(data);
-                module.OnModuleEnable();
+                ScoreModule.AssignPackedData(data);
+                ScoreModule.OnModuleEnable();
             }
-            catch
+            else if (data is PackedMultiplier)
             {
-
+                MultiplierModule.AssignPackedData(data);
+                MultiplierModule.OnModuleEnable();
             }
         }
     }
