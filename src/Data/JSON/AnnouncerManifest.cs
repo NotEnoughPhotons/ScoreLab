@@ -1,17 +1,11 @@
-using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NEP.ScoreLab.Data
 {
-    public struct JSONHUDManifest
+    public struct JSONAnnouncerManifest
     {
-        public string Name;
-        public string Author;
-        public string Description;
-        public string[] Tags;
-        public string GUID;
-        public Texture2D Logo;
+        public string[] Clips;
 
         public bool FromJSON(string pathToJson)
         {
@@ -26,18 +20,21 @@ namespace NEP.ScoreLab.Data
                         return false;
                     }
                     
-                    Name = data["name"].Value<string>();
-                    Author = data["author"].Value<string>();
-                    Description = data["description"].Value<string>();
+                    JArray clips = data["clips"].ToObject<JArray>();
+
+                    if (clips == null)
+                    {
+                        return false;
+                    }
+
+                    for (int i = 0; i < clips.Count; i++)
+                    {
+                        Clips[i] = clips[i].ToString();
+                    }
                 }
             }
 
             return true;
-        }
-
-        public void SetHUDLogo(Texture2D texture)
-        {
-            Logo = texture;
         }
     }
 }
