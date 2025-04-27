@@ -5,30 +5,30 @@ using UnityEngine;
 using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
 
-namespace NEP.ScoreLab.UI
+namespace NEP.ScoreLab.HUD
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
     public class UIDescriptorList : MonoBehaviour
     {
         public UIDescriptorList(System.IntPtr ptr) : base(ptr) { }
 
-        public List<UIModule> ActiveModules;
+        public List<Module> ActiveModules;
 
         public PackedValue.PackedType packedType { get; set; }
         public GameObject ModulePrefab { get; set; }
         public int count = 6;
 
-        public List<UIModule> Modules;
+        public List<Module> Modules;
 
         private void Awake()
         {
-            Modules = new List<UIModule>();
-            ActiveModules = new List<UIModule>();
+            Modules = new List<Module>();
+            ActiveModules = new List<Module>();
 
             for (int i = 0; i < transform.childCount; i++)
             {
                 Transform child = transform.GetChild(i);
-                Modules.Add(child.GetComponent<UIModule>());
+                Modules.Add(child.GetComponent<Module>());
             }
         }
 
@@ -119,8 +119,8 @@ namespace NEP.ScoreLab.UI
             for (int i = 0; i < count; i++)
             {
                 var go = GameObject.Instantiate(ModulePrefab, transform);
-                var module = go.GetComponent<UIModule>();
-                module.ModuleType = UIModule.UIModuleType.Descriptor;
+                var module = go.GetComponent<Module>();
+                module.ModuleType = Module.UIModuleType.Descriptor;
                 Modules.Add(module);
             }
         }

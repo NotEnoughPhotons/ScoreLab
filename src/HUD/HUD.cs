@@ -3,16 +3,16 @@ using UnityEngine;
 using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
 
-namespace NEP.ScoreLab.UI
+namespace NEP.ScoreLab.HUD
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
-    public class UIController : MonoBehaviour
+    public class HUD : MonoBehaviour
     {
-        public UIController(System.IntPtr ptr) : base(ptr) { }
+        public HUD(System.IntPtr ptr) : base(ptr) { }
 
-        public UIModule ScoreModule { get; set; }
-        public UIModule MultiplierModule { get; set; }
-        public UIModule HighScoreModule { get; set; }
+        public Module ScoreModule { get; set; }
+        public Module MultiplierModule { get; set; }
+        public Module HighScoreModule { get; set; }
 
         public Transform followTarget;
 
@@ -20,12 +20,12 @@ namespace NEP.ScoreLab.UI
         {
             if(transform.Find("Main_Score") != null)
             {
-                ScoreModule = transform.Find("Main_Score").GetComponent<UIScoreModule>();
+                ScoreModule = transform.Find("Main_Score").GetComponent<ScoreModule>();
             }
 
             if (transform.Find("Main_Multiplier"))
             {
-                MultiplierModule = transform.Find("Main_Multiplier").GetComponent<UIMultiplierModule>();
+                MultiplierModule = transform.Find("Main_Multiplier").GetComponent<MultiplierModule>();
             }
         }
 
@@ -84,12 +84,12 @@ namespace NEP.ScoreLab.UI
             transform.SetParent(parent);
         }
 
-        public void SetScoreModule(UIModule module)
+        public void SetScoreModule(Module module)
         {
             this.ScoreModule = module;
         }
 
-        public void SetMultiplierModule(UIModule module)
+        public void SetMultiplierModule(Module module)
         {
             this.MultiplierModule = module;
         }

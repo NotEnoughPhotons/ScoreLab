@@ -1,33 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 using NEP.ScoreLab.Data;
 
-namespace NEP.ScoreLab.UI
+namespace NEP.ScoreLab.HUD
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
-    public class UIManager : MonoBehaviour
+    public class HUDManager : MonoBehaviour
     {
-        public UIManager(System.IntPtr ptr) : base(ptr) { }
+        public HUDManager(System.IntPtr ptr) : base(ptr) { }
 
-        public static UIManager Instance { get; private set; }
+        public static HUDManager Instance { get; private set; }
         
-        public List<UIController> LoadedUIs { get; private set; }
-        public UIController ActiveUI { get; private set; }
+        public List<HUD> LoadedHUDs { get; private set; }
+        public HUD ActiveHUD { get; private set; }
 
         private void Awake()
         {
             Instance = this;
             
-            LoadedUIs = new List<UIController>();
+            LoadedHUDs = new List<HUD>();
 
             for(int i = 0; i < DataManager.UI.LoadedUIObjects.Count; i++)
             {
                 var _object = GameObject.Instantiate(DataManager.UI.LoadedUIObjects[i]);
                 _object.name = _object.name.Remove(_object.name.Length - 7);
 
-                var controller = _object.GetComponent<UIController>();
+                var controller = _object.GetComponent<HUD>();
 
                 // Not a valid UI
                 if(controller == null)
@@ -35,7 +33,7 @@ namespace NEP.ScoreLab.UI
                     continue;
                 }
 
-                LoadedUIs.Add(controller);
+                LoadedHUDs.Add(controller);
                 controller.SetParent(transform);
                 controller.gameObject.SetActive(false);
             }
@@ -49,26 +47,26 @@ namespace NEP.ScoreLab.UI
         public void LoadHUD(string name)
         {
             UnloadHUD();
-            foreach (var _controller in LoadedUIs)
+            foreach (var _controller in LoadedHUDs)
             {
                 if (DataManager.UI.GetHUDName(_controller.gameObject) == name)
                 {
-                    ActiveUI = _controller;
+                    ActiveHUD = _controller;
                     break;
                 }
             }
 
-            ActiveUI.gameObject.SetActive(true);
-            ActiveUI.SetParent(null);
+            ActiveHUD.gameObject.SetActive(true);
+            ActiveHUD.SetParent(null);
         }
 
         public void UnloadHUD()
         {
-            if(ActiveUI != null)
+            if(ActiveHUD != null)
             {
-                ActiveUI.SetParent(transform);
-                ActiveUI.gameObject.SetActive(false);
-                ActiveUI = null;
+                ActiveHUD.SetParent(transform);
+                ActiveHUD.gameObject.SetActive(false);
+                ActiveHUD = null;
             }
         }
     }

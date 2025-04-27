@@ -36,14 +36,13 @@
 	  <Compile Include="src\Main.cs" />
 	  <Compile Include="src\Menu\Menu.cs" />
 	  <Compile Include="src\Patches\Hooks.cs" />
-	  <Compile Include="src\UI\Modules\UIModule.cs" />
-	  <Compile Include="src\UI\Modules\UIModuleAnimator.cs" />
-	  <Compile Include="src\UI\Modules\UIMultiplierModule.cs" />
-	  <Compile Include="src\UI\Modules\UIScoreModule.cs" />
-	  <Compile Include="src\UI\Modules\UIValueTween.cs" />
-	  <Compile Include="src\UI\UIController.cs" />
-	  <Compile Include="src\UI\UIDescriptorList.cs" />
-	  <Compile Include="src\UI\UIManager.cs" />
+	  <Compile Include="src\HUD\Modules\Module.cs" />
+	  <Compile Include="src\HUD\Modules\ModuleAnimator.cs" />
+	  <Compile Include="src\HUD\Modules\MultiplierModule.cs" />
+	  <Compile Include="src\HUD\Modules\ScoreModule.cs" />
+	  <Compile Include="src\HUD\HUD.cs" />
+	  <Compile Include="src\HUD\UIDescriptorList.cs" />
+	  <Compile Include="src\HUD\HUDManager.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

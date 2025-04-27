@@ -4,6 +4,7 @@ using UnityEngine;
 
 using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
+using NEP.ScoreLab.HUD;
 using NEP.ScoreLab.Patches;
 using NEP.ScoreLab.Menu;
 
@@ -46,7 +47,7 @@ namespace NEP.ScoreLab
 
         public void OnMarrowSceneLoaded(MarrowSceneInfo sceneInfo)
         {
-            new GameObject("[ScoreLab] - UI Manager").AddComponent<UI.UIManager>();
+            new GameObject("[ScoreLab] - HUD Manager").AddComponent<HUDManager>();
             new GameObject("[ScoreLab] - Audio Manager").AddComponent<Audio.AudioManager>();
             
             // TODO: Add high scores, and add an option to reset level progress

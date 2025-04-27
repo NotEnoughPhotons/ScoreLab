@@ -2,7 +2,7 @@
 using BoneLib.BoneMenu;
 using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
-using NEP.ScoreLab.UI;
+using NEP.ScoreLab.HUD;
 
 namespace NEP.ScoreLab.Menu
 {

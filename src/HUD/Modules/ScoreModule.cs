@@ -4,12 +4,12 @@ using UnityEngine;
 using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
 
-namespace NEP.ScoreLab.UI
+namespace NEP.ScoreLab.HUD
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
-    public class UIScoreModule : UIModule
+    public class ScoreModule : Module
     {
-        public UIScoreModule(System.IntPtr ptr) : base(ptr) { }
+        public ScoreModule(System.IntPtr ptr) : base(ptr) { }
 
         private PackedScore _packedScore { get => (PackedScore)_packedValue; }
 

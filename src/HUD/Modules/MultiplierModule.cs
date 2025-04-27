@@ -1,12 +1,12 @@
 ﻿using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
 
-namespace NEP.ScoreLab.UI
+namespace NEP.ScoreLab.HUD
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
-    public class UIMultiplierModule : UIModule
+    public class MultiplierModule : Module
     {
-        public UIMultiplierModule(System.IntPtr ptr) : base(ptr) { }
+        public MultiplierModule(System.IntPtr ptr) : base(ptr) { }
 
         private PackedMultiplier _packedMultiplier { get => (PackedMultiplier)_packedValue; }
 

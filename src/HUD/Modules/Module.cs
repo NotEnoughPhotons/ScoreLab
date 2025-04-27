@@ -8,12 +8,12 @@ using Il2CppTMPro;
 using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
 
-namespace NEP.ScoreLab.UI
+namespace NEP.ScoreLab.HUD
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
-    public class UIModule : MonoBehaviour
+    public class Module : MonoBehaviour
     {
-        public UIModule(IntPtr ptr) : base(ptr) { }
+        public Module(IntPtr ptr) : base(ptr) { }
 
         public enum UIModuleType
         {
@@ -48,9 +48,7 @@ namespace NEP.ScoreLab.UI
         protected virtual string Path_TitleText { get => "Title"; }
         protected virtual string Path_ValueText { get => "Value"; }
         protected virtual string Path_TimeBar { get => "TimeBar"; }
-
-        protected UIValueTween _valueTween;
-
+        
         private bool _reachedDecay = false;
         private bool _reachedPostDecay = false;
 
@@ -183,8 +181,6 @@ namespace NEP.ScoreLab.UI
             _title = titleTran?.GetComponent<TextMeshProUGUI>();
             _value = valueTran?.GetComponent<TextMeshProUGUI>();
             _timeBar = timeBarTran?.GetComponent<Slider>();
-
-            _valueTween = valueTran?.GetComponent<UIValueTween>();
         }
 
         private void OnEnable() => OnModuleEnable();

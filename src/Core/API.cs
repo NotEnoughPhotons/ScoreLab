@@ -1,5 +1,5 @@
 using NEP.ScoreLab.Data;
-using NEP.ScoreLab.UI;
+using NEP.ScoreLab.HUD;
 
 namespace NEP.ScoreLab.Core
 {
@@ -62,11 +62,11 @@ namespace NEP.ScoreLab.Core
 
         public static class UI
         {
-            public static Action<UIModule> OnModuleEnabled;
-            public static Action<UIModule> OnModuleDisabled;
+            public static Action<Module> OnModuleEnabled;
+            public static Action<Module> OnModuleDisabled;
 
-            public static Action<UIModule> OnModuleDecayed;
-            public static Action<UIModule> OnModulePostDecayed;
+            public static Action<Module> OnModuleDecayed;
+            public static Action<Module> OnModulePostDecayed;
         }
     }
 }
