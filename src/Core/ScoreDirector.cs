@@ -77,13 +77,21 @@ namespace NEP.ScoreLab.Core
                 }
             }
 
-            [HarmonyLib.HarmonyPatch(typeof(Arena_Stats))]
-            [HarmonyLib.HarmonyPatch(nameof(Arena_Stats.RoundAchieved))]
-            public static class EndOfRoundPatch
+            [HarmonyLib.HarmonyPatch(typeof(Arena_GameController))]
+            [HarmonyLib.HarmonyPatch(nameof(Arena_GameController.Awake))]
+            public static class ArenaGameControllerAwakePatch
             {
-                public static void Postfix()
+                public static void Postfix(Arena_GameController __instance)
                 {
-                    ScoreTracker.Instance.Add(Data.EventType.Score.GameRoundCompleted);
+                    __instance.onRoundEnd.AddListener(new System.Action(() =>
+                    {
+                        ScoreTracker.Instance.Add(Data.EventType.Score.GameRoundCompleted);
+                    }));
+                    
+                    __instance.onWaveEnd.AddListener(new System.Action(() =>
+                    {
+                        ScoreTracker.Instance.Add(Data.EventType.Score.GameWaveCompleted);
+                    }));
                 }
             }
 

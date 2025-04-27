@@ -26,6 +26,7 @@
 	  <Compile Include="src\Core\Settings.cs" />
 	  <Compile Include="src\Data\DataManager.cs" />
 	  <Compile Include="src\Data\HUDLoader.cs" />
+	  <Compile Include="src\Data\JSON\AnnouncerManifest.cs" />
 	  <Compile Include="src\Data\JSON\JSONHudManifest.cs" />
 	  <Compile Include="src\Data\JSON\JSONMult.cs" />
 	  <Compile Include="src\Data\JSON\JSONScore.cs" />
