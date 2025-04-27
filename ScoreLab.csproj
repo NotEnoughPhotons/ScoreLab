@@ -25,6 +25,8 @@
 	  <Compile Include="src\Core\ScoreTracker.cs" />
 	  <Compile Include="src\Core\Settings.cs" />
 	  <Compile Include="src\Data\DataManager.cs" />
+	  <Compile Include="src\Data\HUDLoader.cs" />
+	  <Compile Include="src\Data\JSON\JSONHudManifest.cs" />
 	  <Compile Include="src\Data\JSON\JSONMult.cs" />
 	  <Compile Include="src\Data\JSON\JSONScore.cs" />
 	  <Compile Include="src\Data\MarrowSceneInfo.cs" />
@@ -41,7 +43,7 @@
 	  <Compile Include="src\HUD\Modules\MultiplierModule.cs" />
 	  <Compile Include="src\HUD\Modules\ScoreModule.cs" />
 	  <Compile Include="src\HUD\HUD.cs" />
-	  <Compile Include="src\HUD\UIDescriptorList.cs" />
+	  <Compile Include="src\HUD\DescriptorList.cs" />
 	  <Compile Include="src\HUD\HUDManager.cs" />
 	</ItemGroup>
 

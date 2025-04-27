@@ -8,9 +8,9 @@ using NEP.ScoreLab.Data;
 namespace NEP.ScoreLab.HUD
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
-    public class UIDescriptorList : MonoBehaviour
+    public class DescriptorList : MonoBehaviour
     {
-        public UIDescriptorList(System.IntPtr ptr) : base(ptr) { }
+        public DescriptorList(System.IntPtr ptr) : base(ptr) { }
 
         public List<Module> ActiveModules;
 

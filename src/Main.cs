@@ -35,6 +35,7 @@ namespace NEP.ScoreLab
             Hooks.Game.OnMarrowGameStarted += OnMarrowGameStarted;
             Hooks.Game.OnMarrowSceneLoaded += OnMarrowSceneLoaded;
             
+            HUDLoader.Initalize();
             SLMenu.Initialize();
         }
 

@@ -40,36 +40,7 @@ namespace NEP.ScoreLab.Data
                 return null;
             }
         }
-
-        public static class Bundle
-        {
-            public static List<AssetBundle> Bundles { get; private set; }
-
-            public static void Init()
-            {
-                Bundles = new List<AssetBundle>();
-
-                InitializeDirectories();
-                LoadBundles(Path_CustomUIs);
-            }
-
-            public static void LoadBundles(string path)
-            {
-                string[] files = LoadAllFiles(path);
-
-                foreach (var file in files)
-                {
-                    if (!file.EndsWith(".hud"))
-                    {
-                        return;
-                    }
-
-                    AssetBundle bundle = AssetBundle.LoadFromFile(file);
-                    Bundles.Add(bundle);
-                }
-            }
-        }
-
+        
         public static class PackedValues
         {
             public static Dictionary<string, PackedValue> ValueTable { get; private set; }
@@ -314,103 +285,9 @@ namespace NEP.ScoreLab.Data
             }
         }
 
-        public static class UI
-        {
-            public static void Init()
-            {
-                LoadedUIObjects = new List<GameObject>();
-                UINames = new List<string>();
-
-                LoadCustomUIs(Bundle.Bundles);
-                LoadUINames();
-
-                //SpawnDefaultUI();
-            }
-
-            public static List<GameObject> LoadedUIObjects { get; private set; }
-            public static List<string> UINames { get; private set; }
-            public static readonly string DefaultUIName = "Coda";
-
-            private static readonly string Prefix_Hud = "[SLHUD] - ";
-
-            public static GameObject GetObjectFromList(GameObject[] list, string query)
-            {
-                foreach (var obj in list)
-                {
-                    if (obj.name == query)
-                    {
-                        return obj;
-                    }
-                }
-
-                return null;
-            }
-
-            public static void LoadCustomUIs(List<AssetBundle> bundles)
-            {
-                if (bundles == null)
-                {
-                    return;
-                }
-
-                foreach (var bundle in bundles)
-                {
-                    var loadedObjects = bundle.LoadAllAssets();
-
-                    foreach (var bundleObject in loadedObjects)
-                    {
-                        if (bundleObject.TryCast<GameObject>())
-                        {
-                            var go = bundleObject.Cast<GameObject>();
-                            go.hideFlags = HideFlags.DontUnloadUnusedAsset;
-
-                            LoadedUIObjects.Add(go);
-                        }
-                    }
-                }
-            }
-
-            public static void LoadUINames()
-            {
-                foreach (var uiObject in LoadedUIObjects)
-                {
-                    if (uiObject.name.StartsWith("[SLHUD]"))
-                    {
-                        UINames.Add(uiObject.name.Substring(Prefix_Hud.Length));
-                    }
-                }
-            }
-
-            public static void SpawnDefaultUI()
-            {
-                SpawnUI(DefaultUIName);
-            }
-
-            public static void SpawnUI(string name)
-            {
-                foreach (var obj in LoadedUIObjects)
-                {
-                    if (GetHUDName(obj) == name)
-                    {
-                        SpawnUI(obj);
-                    }
-                }
-            }
-
-            public static void SpawnUI(GameObject uiObject)
-            {
-                GameObject.Instantiate(uiObject);
-            }
-
-            public static string GetHUDName(GameObject obj)
-            {
-                return obj.name.Substring(Prefix_Hud.Length);
-            }
-        }
-
         static readonly string Path_Developer      = Path.Combine(MelonEnvironment.UserDataDirectory, "Not Enough Photons");
         static readonly string Path_Mod            = Path.Combine(Path_Developer, "ScoreLab");
-        static readonly string Path_CustomUIs      = Path.Combine(Path_Mod, "Custom UIs");
+        static readonly string Path_CustomUIs      = Path.Combine(Path_Mod, "HUDs");
         static readonly string Path_SFX            = Path.Combine(Path_Mod, "SFX");
 
         static readonly string Path_ScoreData      = Path.Combine(Path_Mod, "Data/Score");
@@ -425,8 +302,8 @@ namespace NEP.ScoreLab.Data
         {
             InitializeDirectories();
 
-            Bundle.Init();
-            UI.Init();
+            // Bundle.Init();
+            // UI.Init();
             Audio.Init();
             PackedValues.Init();
             //HighScore.Init();

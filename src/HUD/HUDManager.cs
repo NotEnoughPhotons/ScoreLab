@@ -20,42 +20,48 @@ namespace NEP.ScoreLab.HUD
             
             LoadedHUDs = new List<HUD>();
 
-            for(int i = 0; i < DataManager.UI.LoadedUIObjects.Count; i++)
+            for(int i = 0; i < HUDLoader.LoadedHUDManifests.Count; i++)
             {
-                var _object = GameObject.Instantiate(DataManager.UI.LoadedUIObjects[i]);
-                _object.name = _object.name.Remove(_object.name.Length - 7);
+                var manifest = HUDLoader.LoadedHUDManifests[i];
+                var hudObject = GameObject.Instantiate(HUDLoader.LoadedHUDs[manifest.Name]);
+                hudObject.name = manifest.Name;
 
-                var controller = _object.GetComponent<HUD>();
+                var hud = hudObject.GetComponent<HUD>();
 
                 // Not a valid UI
-                if(controller == null)
+                if(hud == null)
                 {
                     continue;
                 }
 
-                LoadedHUDs.Add(controller);
-                controller.SetParent(transform);
-                controller.gameObject.SetActive(false);
+                LoadedHUDs.Add(hud);
+                hud.SetParent(transform);
+                hud.gameObject.SetActive(false);
             }
         }
 
         private void Start()
         {
-            LoadHUD("Tabloid");
+            LoadHUD("Coda");
         }
 
         public void LoadHUD(string name)
         {
             UnloadHUD();
-            foreach (var _controller in LoadedHUDs)
+            foreach (var hud in LoadedHUDs)
             {
-                if (DataManager.UI.GetHUDName(_controller.gameObject) == name)
+                if (hud.name == name)
                 {
-                    ActiveHUD = _controller;
+                    ActiveHUD = hud;
                     break;
                 }
             }
 
+            if (ActiveHUD == null)
+            {
+                return;
+            }
+            
             ActiveHUD.gameObject.SetActive(true);
             ActiveHUD.SetParent(null);
         }
