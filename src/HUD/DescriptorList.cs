@@ -30,6 +30,16 @@ namespace NEP.ScoreLab.HUD
                 Transform child = transform.GetChild(i);
                 Modules.Add(child.GetComponent<Module>());
             }
+
+            // TODO: Come up with a better system for this
+            if (name == "ScoreDescriptors")
+            {
+                packedType = PackedValue.PackedType.Score;
+            }
+            else if (name == "MultiplierDescriptors")
+            {
+                packedType = PackedValue.PackedType.Multiplier;
+            }
         }
 
         private void OnEnable()
