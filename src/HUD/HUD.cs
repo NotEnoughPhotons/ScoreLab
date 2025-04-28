@@ -18,14 +18,14 @@ namespace NEP.ScoreLab.HUD
 
         private void Awake()
         {
-            if(transform.Find("Main_Score") != null)
+            if(transform.Find("MainScore") != null)
             {
-                ScoreModule = transform.Find("Main_Score").GetComponent<ScoreModule>();
+                ScoreModule = transform.Find("MainScore").GetComponent<ScoreModule>();
             }
 
-            if (transform.Find("Main_Multiplier"))
+            if (transform.Find("MainMultiplier"))
             {
-                MultiplierModule = transform.Find("Main_Multiplier").GetComponent<MultiplierModule>();
+                MultiplierModule = transform.Find("MainMultiplier").GetComponent<MultiplierModule>();
             }
         }
 

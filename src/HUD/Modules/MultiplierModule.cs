@@ -16,10 +16,6 @@ namespace NEP.ScoreLab.HUD
             {
                 ModuleType = UIModuleType.Descriptor;
             }
-            else if (name == "Main_Multiplier")
-            {
-                ModuleType = UIModuleType.Main;
-            }
         }
 
         public override void OnModuleEnable()
