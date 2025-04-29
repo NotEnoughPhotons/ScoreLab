@@ -1,6 +1,8 @@
 ﻿using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
 
+using UnityEngine;
+
 namespace NEP.ScoreLab.HUD
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
@@ -10,6 +12,10 @@ namespace NEP.ScoreLab.HUD
 
         private PackedMultiplier _packedMultiplier { get => (PackedMultiplier)_packedValue; }
 
+        private float _currentValue;
+        private float _targetValue;
+        private float _rate;
+        
         private void Awake()
         {
             if (name == "MultiplierDescriptor")
@@ -34,7 +40,7 @@ namespace NEP.ScoreLab.HUD
 
             if (ModuleType == UIModuleType.Main)
             {
-                SetText(_value, $"{ScoreTracker.Instance.Multiplier.ToString()}x");
+                SetText(_value, $"{ScoreTracker.Multiplier.ToString()}x");
             }
             else if (ModuleType == UIModuleType.Descriptor)
             {
@@ -80,6 +86,18 @@ namespace NEP.ScoreLab.HUD
 
         public override void OnUpdate()
         {
+            if (ModuleType == UIModuleType.Main)
+            { 
+                SetTweenValue(ScoreTracker.Multiplier);
+                _currentValue = Mathf.MoveTowards(_currentValue, _targetValue, _rate * Time.unscaledDeltaTime);
+                if (Mathf.Approximately(_currentValue, _targetValue))
+                {
+                    _currentValue = _targetValue;
+                }
+                
+                SetText(_value, _currentValue.ToString("F2") + "x");
+            }
+            
             if (_packedMultiplier != null)
             {
                 if (_packedMultiplier.condition != null)
@@ -103,6 +121,12 @@ namespace NEP.ScoreLab.HUD
             {
                 SetBarValue(_timeBar, _tDecay);
             }
+        }
+        
+        private void SetTweenValue(float value)
+        {
+            _targetValue = value;
+            _rate = Mathf.Abs(_targetValue - _currentValue) / 1.0f;
         }
     }
 }
