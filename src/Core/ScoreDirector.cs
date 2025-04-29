@@ -7,7 +7,10 @@ using Il2CppSLZ.Marrow;
 using Il2CppSLZ.Marrow.PuppetMasta;
 using Il2CppSLZ.Marrow.AI;
 
+using NEP.ScoreLab.Data;
+
 using Avatar = Il2CppSLZ.VRMK.Avatar;
+using EventType = NEP.ScoreLab.Data.EventType;
 
 namespace NEP.ScoreLab.Core
 {
@@ -37,11 +40,11 @@ namespace NEP.ScoreLab.Core
 
                     if (trp.npcType == TriggerRefProxy.NpcType.Crablet)
                     {
-                        ScoreTracker.Instance.Add(Data.EventType.Score.Crabcest);
+                        ScoreTracker.Add(EventType.Score.Crabcest);
                     }
                     else
                     {
-                        ScoreTracker.Instance.Add(Data.EventType.Score.Facehug);
+                        ScoreTracker.Add(EventType.Score.Facehug);
                     }
                 }
             }
@@ -53,7 +56,7 @@ namespace NEP.ScoreLab.Core
                 public static void Postfix(RigManager rM)
                 {
                     IsPlayerSeated = true;
-                    ScoreTracker.Instance.Add(Data.EventType.Mult.Seated);
+                    ScoreTracker.Add(EventType.Mult.Seated);
                 }
             }
 
@@ -73,7 +76,7 @@ namespace NEP.ScoreLab.Core
             {
                 public static void Postfix()
                 {
-                    ScoreTracker.Instance.Add(Data.EventType.Mult.SecondWind);
+                    ScoreTracker.Add(EventType.Mult.SecondWind);
                 }
             }
 
@@ -85,12 +88,12 @@ namespace NEP.ScoreLab.Core
                 {
                     __instance.onRoundEnd.AddListener(new System.Action(() =>
                     {
-                        ScoreTracker.Instance.Add(Data.EventType.Score.GameRoundCompleted);
+                        ScoreTracker.Add(EventType.Score.GameRoundCompleted);
                     }));
                     
                     __instance.onWaveEnd.AddListener(new System.Action(() =>
                     {
-                        ScoreTracker.Instance.Add(Data.EventType.Score.GameWaveCompleted);
+                        ScoreTracker.Add(EventType.Score.GameWaveCompleted);
                     }));
                 }
             }
@@ -115,11 +118,11 @@ namespace NEP.ScoreLab.Core
                     {
                         if (!_midAirTargetBool)
                         {
-                            _tAirTime += UnityEngine.Time.deltaTime;
+                            _tAirTime += Time.deltaTime;
 
                             if(_tAirTime > _tMidAirDelay)
                             {
-                                ScoreTracker.Instance.Add(Data.EventType.Mult.MidAir);
+                                ScoreTracker.Add(EventType.Mult.MidAir);
                                 _midAirTargetBool = true;
                             }
                         }
@@ -145,7 +148,7 @@ namespace NEP.ScoreLab.Core
 
                     if (_playerRecentlySwappedAvatars)
                     {
-                        ScoreTracker.Instance.Add(Data.EventType.Mult.SwappedAvatars);
+                        ScoreTracker.Add(EventType.Mult.SwappedAvatars);
                         _playerRecentlySwappedAvatars = false;
                     }
                 }
@@ -180,11 +183,11 @@ namespace NEP.ScoreLab.Core
             {
                 if(!behaviour.sensors.isGrounded)
                 {
-                    ScoreTracker.Instance.Add(Data.EventType.Score.EnemyMidAirKill);
+                    ScoreTracker.Add(EventType.Score.EnemyMidAirKill);
                 }
 
-                ScoreTracker.Instance.Add(Data.EventType.Score.Kill);
-                ScoreTracker.Instance.Add(Data.EventType.Mult.Kill);
+                ScoreTracker.Add(ValueManager.Get(EventType.Score.Kill));
+                ScoreTracker.Add(ValueManager.Get(EventType.Mult.Kill));
             }
         }
         

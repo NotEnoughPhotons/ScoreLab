@@ -15,7 +15,7 @@ namespace NEP.ScoreLab.HUD
 
         private float _targetValue;
         private float _currentValue;
-        private float _rate;
+        private float _rate = 4f;
         
         private void Awake()
         {
@@ -31,7 +31,7 @@ namespace NEP.ScoreLab.HUD
 
             if (ModuleType == UIModuleType.Main)
             {
-                SetText(_value, ScoreTracker.Instance.Score);
+                SetText(_value, ScoreTracker.Score);
             }
             
             if (_packedValue == null)
@@ -41,24 +41,8 @@ namespace NEP.ScoreLab.HUD
             
             if (ModuleType == UIModuleType.Descriptor)
             {
-                if (PackedValue.Stackable)
-                {
-                    if(PackedValue.TierEventType != null)
-                    {
-                        SetText(_title, _packedScore.Name);
-                        SetText(_value, _packedScore.Score);
-                    }
-                    else
-                    {
-                        SetText(_title, _packedScore.Name);
-                        SetText(_value, _packedScore.AccumulatedScore);
-                    }
-                }
-                else
-                {
-                    SetText(_title, _packedScore.Name);
-                    SetText(_value, _packedScore.Score);
-                }
+                SetText(_title, _packedScore.Name);
+                SetText(_value, $"+{Mathf.RoundToInt(_packedScore.Score * ScoreTracker.Multiplier)}");
             }
         }
 
@@ -73,7 +57,7 @@ namespace NEP.ScoreLab.HUD
 
             if (ModuleType == UIModuleType.Main)
             { 
-                SetTweenValue(ScoreTracker.Instance.Score);
+                SetTweenValue(ScoreTracker.Score);
                 _currentValue = Mathf.MoveTowards(_currentValue, _targetValue, _rate * Time.unscaledDeltaTime);
                 if (Mathf.Approximately(_currentValue, _targetValue))
                 {
