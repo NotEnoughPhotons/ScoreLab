@@ -13,13 +13,24 @@ namespace NEP.ScoreLab.HUD
         
         public List<HUD> LoadedHUDs { get; private set; }
         public HUD ActiveHUD { get; private set; }
-
+        public HUD LastHUD { get; private set; }
+        
         private void Awake()
         {
             Instance = this;
             
             LoadedHUDs = new List<HUD>();
 
+            Populate();
+        }
+
+        private void Start()
+        {
+            LoadHUD("Coda");
+        }
+
+        public void Populate()
+        {
             for(int i = 0; i < HUDLoader.LoadedHUDManifests.Count; i++)
             {
                 var manifest = HUDLoader.LoadedHUDManifests[i];
@@ -39,14 +50,14 @@ namespace NEP.ScoreLab.HUD
                 hud.gameObject.SetActive(false);
             }
         }
-
-        private void Start()
-        {
-            LoadHUD("Coda");
-        }
-
+        
         public void LoadHUD(string name)
         {
+            if (ActiveHUD != null)
+            {
+                LastHUD = ActiveHUD;
+            }
+            
             UnloadHUD();
             foreach (var hud in LoadedHUDs)
             {
@@ -74,6 +85,30 @@ namespace NEP.ScoreLab.HUD
                 ActiveHUD.gameObject.SetActive(false);
                 ActiveHUD = null;
             }
+        }
+
+        public void DestroyHUD()
+        {
+            if (ActiveHUD != null)
+            {
+                Destroy(ActiveHUD);
+                ActiveHUD = null;
+            }
+        }
+
+        public void DestroyLoadedHUDs()
+        {
+            if (LoadedHUDs == null || LoadedHUDs.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var hud in LoadedHUDs)
+            {
+                Destroy(hud.gameObject);
+            }
+            
+            LoadedHUDs.Clear();
         }
     }
 }
