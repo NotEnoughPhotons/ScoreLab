@@ -35,15 +35,16 @@ namespace NEP.ScoreLab
             Hooks.Game.OnMarrowGameStarted += OnMarrowGameStarted;
             Hooks.Game.OnMarrowSceneLoaded += OnMarrowSceneLoaded;
             
-            HUDLoader.Initalize();
+            HUDLoader.Initialize();
             SLMenu.Initialize();
         }
 
         public void OnMarrowGameStarted()
         {
-            DataManager.Init();
+            ScoreTracker.Initialize();
+            DataManager.Initialize();
+            ValueManager.Initialize();
             ScoreDirector.Patches.InitPatches();
-            new ScoreTracker().Initialize();
         }
 
         public void OnMarrowSceneLoaded(MarrowSceneInfo sceneInfo)
@@ -52,18 +53,23 @@ namespace NEP.ScoreLab
             new GameObject("[ScoreLab] - Audio Manager").AddComponent<Audio.AudioManager>();
             
             // TODO: Add high scores, and add an option to reset level progress
-            ScoreTracker.Instance.ResetScore();
-            ScoreTracker.Instance.ResetMultiplier();
+            ScoreTracker.ResetScore();
+            ScoreTracker.ResetMultiplier();
         }
 
         public override void OnUpdate()
         {
-            if(ScoreTracker.Instance == null)
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.F5))
             {
-                return;
+                HUDLoader.ReloadHUDs();
             }
+            
+            ScoreTracker.Update();
+        }
 
-            ScoreTracker.Instance.Update();
+        public override void OnDeinitializeMelon()
+        {
+            
         }
     }
 }

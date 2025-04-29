@@ -8,8 +8,27 @@ namespace NEP.ScoreLab.Data
     [Serializable]
     public class PackedMultiplier : PackedValue
     {
-        public PackedMultiplier() { }
+        public PackedMultiplier()
+        {
+            
+        }
 
+        public PackedMultiplier(JSONMult mult, bool useTiers = false)
+        {
+            eventType = mult.EventType;
+            DecayTime = mult.DecayTime;
+            Stackable = mult.Stackable;
+            Name = mult.Name;
+            Multiplier = mult.Multiplier;
+            Condition = mult.Condition;
+            TierRequirement = mult.TierRequirement;
+                
+            if (useTiers)
+            {
+                TierEventType = mult.TierEventType;
+            }
+        }
+        
         public override PackedType PackedValueType => PackedType.Multiplier;
         public float Multiplier;
         public float AccumulatedMultiplier;
@@ -44,7 +63,7 @@ namespace NEP.ScoreLab.Data
             {
                 if (!condition())
                 {
-                    ScoreTracker.Instance.Remove(this);
+                    ScoreTracker.Remove(this);
                 }
             }
 
@@ -65,7 +84,7 @@ namespace NEP.ScoreLab.Data
                 {
                     API.Multiplier.OnMultiplierTimeExpired?.Invoke(this);
                     _tDecay = DecayTime;
-                    ScoreTracker.Instance.Remove(this);
+                    ScoreTracker.Remove(this);
                 }
 
                 _tDecay -= Time.deltaTime;

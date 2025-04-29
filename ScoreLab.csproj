@@ -36,8 +36,9 @@
 	  <Compile Include="src\Data\Packages\PackedMultiplier.cs" />
 	  <Compile Include="src\Data\Packages\PackedScore.cs" />
 	  <Compile Include="src\Data\Packages\PackedValue.cs" />
+	  <Compile Include="src\Data\ValueManager.cs" />
 	  <Compile Include="src\Main.cs" />
-	  <Compile Include="src\Menu\Menu.cs" />
+	  <Compile Include="src\Menu\SLMenu.cs" />
 	  <Compile Include="src\Patches\Hooks.cs" />
 	  <Compile Include="src\HUD\Modules\Module.cs" />
 	  <Compile Include="src\HUD\Modules\ModuleAnimator.cs" />

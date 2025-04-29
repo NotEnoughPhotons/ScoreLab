@@ -2,6 +2,8 @@ using BoneLib;
 using UnityEngine;
 
 using MelonLoader.Utils;
+using NEP.ScoreLab.HUD;
+using NEP.ScoreLab.Menu;
 
 namespace NEP.ScoreLab.Data
 {
@@ -10,10 +12,15 @@ namespace NEP.ScoreLab.Data
         public static Dictionary<string, GameObject> LoadedHUDs;
         public static List<JSONHUDManifest> LoadedHUDManifests;
 
-        public static void Initalize()
+        private static List<AssetBundle> _assetBundles;
+        private static List<UnityEngine.Object> _persistentBundleObjects;
+        
+        public static void Initialize()
         {
             LoadedHUDs = new Dictionary<string, GameObject>();
             LoadedHUDManifests = new List<JSONHUDManifest>();
+            _persistentBundleObjects = new List<UnityEngine.Object>();
+            _assetBundles = new List<AssetBundle>();
             
             LoadHUDs();
         }
@@ -101,9 +108,38 @@ namespace NEP.ScoreLab.Data
                     hudManifest.SetHUDLogo(hudLogo);
                 }
                 
+                _assetBundles.Add(hudBundle);
+                
                 LoadedHUDManifests.Add(hudManifest);
                 LoadedHUDs.Add(hudManifest.Name, hudObject);
             }
+        }
+
+        public static void ReloadHUDs()
+        {
+            if (HUDManager.Instance.ActiveHUD != null)
+            {
+                HUDManager.Instance.DestroyHUD();
+            }
+            
+            HUDManager.Instance.DestroyLoadedHUDs();
+
+            LoadedHUDManifests.Clear();
+            LoadedHUDs.Clear();
+
+            foreach (var assetBundle in _assetBundles)
+            {
+                assetBundle.Unload(true);
+            }
+            
+            _assetBundles.Clear();
+            
+            LoadHUDs();
+            
+            SLMenu.RefreshHUDPage();
+            
+            HUDManager.Instance.Populate();
+            HUDManager.Instance.LoadHUD(HUDManager.Instance.LastHUD.name);
         }
     }
 }
