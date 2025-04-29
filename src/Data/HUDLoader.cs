@@ -9,6 +9,7 @@ namespace NEP.ScoreLab.Data
 {
     public static class HUDLoader
     {
+        public static Dictionary<string, AudioClip> HUDAudioBank;
         public static Dictionary<string, GameObject> LoadedHUDs;
         public static List<JSONHUDManifest> LoadedHUDManifests;
 
@@ -18,6 +19,7 @@ namespace NEP.ScoreLab.Data
         public static void Initialize()
         {
             LoadedHUDs = new Dictionary<string, GameObject>();
+            HUDAudioBank = new Dictionary<string, AudioClip>();
             LoadedHUDManifests = new List<JSONHUDManifest>();
             _persistentBundleObjects = new List<UnityEngine.Object>();
             _assetBundles = new List<AssetBundle>();

@@ -11,7 +11,7 @@ namespace NEP.ScoreLab.Audio
         public AudioManager(IntPtr ptr) : base(ptr) { }
 
         public static AudioManager Instance { get; private set; }
-
+        
         private List<GameObject> _pooledObjects;
 
         private void Awake()
