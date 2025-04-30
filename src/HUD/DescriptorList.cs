@@ -90,29 +90,27 @@ namespace NEP.ScoreLab.HUD
                     ActiveModules.Add(module);
                     break;
                 }
-                else
+                
+                if (ActiveModules.Contains(module) && !module.IsDecaying())
                 {
-                    if (ActiveModules.Contains(module))
+                    if (module.PackedValue.eventType == value.eventType)
                     {
-                        if (module.PackedValue.eventType == value.eventType)
+                        if (value.Stackable)
                         {
-                            if (value.Stackable)
-                            {
-                                module.AssignPackedData(value);
-                                module.OnModuleEnable();
-                                module.SetDecayTime(value.DecayTime);
-                                module.SetPostDecayTime(0.5f);
-                                break;
-                            }
+                            module.AssignPackedData(value);
+                            module.OnModuleEnable();
+                            module.SetDecayTime(value.DecayTime);
+                            module.SetPostDecayTime(0.5f);
+                            break;
+                        }
 
-                            if (value.Tiers != null)
-                            {
-                                module.AssignPackedData(value);
-                                module.OnModuleEnable();
-                                module.SetDecayTime(value.DecayTime);
-                                module.SetPostDecayTime(0.5f);
-                                break;
-                            }
+                        if (value.Tiers != null)
+                        {
+                            module.AssignPackedData(value);
+                            module.OnModuleEnable();
+                            module.SetDecayTime(value.DecayTime);
+                            module.SetPostDecayTime(0.5f);
+                            break;
                         }
                     }
                 }

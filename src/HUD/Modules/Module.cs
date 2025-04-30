@@ -38,6 +38,7 @@ namespace NEP.ScoreLab.HUD
         protected PackedValue _packedValue { get; private set; }
 
         protected bool _canDecay { get; private set; }
+        protected bool _decayed { get; private set; }
         protected float _decayTime { get; private set; }
         protected float _postDecayTime { get; private set; }
 
@@ -83,6 +84,16 @@ namespace NEP.ScoreLab.HUD
         {
             this._postDecayTime = postDecayTime;
             this._tPostDecay = this._postDecayTime;
+        }
+
+        public bool IsDecaying()
+        {
+            return _reachedDecay;
+        }
+
+        public bool IsDecayed()
+        {
+            return _reachedPostDecay;
         }
 
         protected void SetText(TextMeshProUGUI text, string value)
