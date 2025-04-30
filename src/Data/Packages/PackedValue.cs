@@ -21,7 +21,7 @@ namespace NEP.ScoreLab.Data
         public string eventType;
         public string TierEventType;
 
-        public UnityEngine.AudioClip EventAudio;
+        public PackedAudioParams EventAudio;
 
         public bool Stackable;
 

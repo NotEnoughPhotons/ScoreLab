@@ -1,4 +1,5 @@
 using BoneLib;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 
 using MelonLoader.Utils;
@@ -73,7 +74,6 @@ namespace NEP.ScoreLab.Data
                     if (file.EndsWith(".hud_manifest"))
                     {
                         manifest = file;
-                        break;
                     }
                 }
 
@@ -102,6 +102,9 @@ namespace NEP.ScoreLab.Data
                 // Check if the bundle has a valid HUD object
                 GameObject hudObject = hudBundle.LoadPersistentAsset<GameObject>($"[SLHUD] - {hudManifest.Name}");
                     
+                // This isn't necessary to work, but get any audio clips
+                Il2CppReferenceArray<UnityEngine.Object> clipObjects = hudBundle.LoadAllAssets();
+                
                 // Optionally, retrieve the HUDs logo if it exists
                 Texture2D hudLogo = hudBundle.LoadPersistentAsset<Texture2D>("Logo");
 
@@ -114,6 +117,22 @@ namespace NEP.ScoreLab.Data
                 
                 LoadedHUDManifests.Add(hudManifest);
                 LoadedHUDs.Add(hudManifest.Name, hudObject);
+
+                if (clipObjects == null || clipObjects.Length == 0)
+                {
+                    continue;
+                }
+                
+                foreach (var clip in clipObjects)
+                {
+                    AudioClip clipCasted = clip.TryCast<AudioClip>();
+                    
+                    if (clipCasted != null)
+                    {
+                        clipCasted.hideFlags = HideFlags.DontUnloadUnusedAsset;
+                        HUDAudioBank.Add(clip.name, clipCasted);
+                    }
+                }
             }
         }
 
@@ -126,6 +145,7 @@ namespace NEP.ScoreLab.Data
             
             HUDManager.Instance.DestroyLoadedHUDs();
 
+            HUDAudioBank.Clear();
             LoadedHUDManifests.Clear();
             LoadedHUDs.Clear();
 

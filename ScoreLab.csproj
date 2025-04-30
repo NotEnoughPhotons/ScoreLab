@@ -19,7 +19,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Compile Include="src\Audio\AudioManager.cs" />
-	  <Compile Include="src\Audio\PooledAudio.cs" />
 	  <Compile Include="src\Core\API.cs" />
 	  <Compile Include="src\Core\ScoreDirector.cs" />
 	  <Compile Include="src\Core\ScoreTracker.cs" />
@@ -32,11 +31,13 @@
 	  <Compile Include="src\Data\JSON\JSONScore.cs" />
 	  <Compile Include="src\Data\MarrowSceneInfo.cs" />
 	  <Compile Include="src\Data\Packages\EventType.cs" />
+	  <Compile Include="src\Data\Packages\PackedAudioParams.cs" />
 	  <Compile Include="src\Data\Packages\PackedHighScore.cs" />
 	  <Compile Include="src\Data\Packages\PackedMultiplier.cs" />
 	  <Compile Include="src\Data\Packages\PackedScore.cs" />
 	  <Compile Include="src\Data\Packages\PackedValue.cs" />
 	  <Compile Include="src\Data\ValueManager.cs" />
+	  <Compile Include="src\Data\ValuePackage.cs" />
 	  <Compile Include="src\Main.cs" />
 	  <Compile Include="src\Menu\SLMenu.cs" />
 	  <Compile Include="src\Patches\Hooks.cs" />

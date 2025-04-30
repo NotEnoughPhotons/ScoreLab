@@ -20,6 +20,7 @@ namespace NEP.ScoreLab.Data
             Name = score.Name;
             Score = score.Score;
             TierRequirement = score.TierRequirement;
+            EventAudio = new PackedAudioParams(score.EventAudio);
             
             if (useTiers)
             {

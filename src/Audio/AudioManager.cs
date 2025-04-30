@@ -5,50 +5,21 @@ using NEP.ScoreLab.Data;
 
 namespace NEP.ScoreLab.Audio
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
-    public class AudioManager : MonoBehaviour
+    public static class AudioManager
     {
-        public AudioManager(IntPtr ptr) : base(ptr) { }
-
-        public static AudioManager Instance { get; private set; }
-        
-        private List<GameObject> _pooledObjects;
-
-        private void Awake()
-        {
-            _pooledObjects = new List<GameObject>();
-
-            GameObject list = new GameObject("Pooled Audio");
-            list.transform.parent = transform;
-
-            for(int i = 0; i < 64; i++)
-            {
-                GameObject pooledAudio = new GameObject("Poolee Audio");
-                pooledAudio.transform.parent = list.transform;
-
-                AudioSource source = pooledAudio.AddComponent<AudioSource>();
-                source.playOnAwake = true;
-                source.volume = 5f;
-
-                pooledAudio.AddComponent<PooledAudio>();
-                pooledAudio.SetActive(false);
-                _pooledObjects.Add(pooledAudio);
-            }
-        }
-
-        private void OnEnable()
+        public static void Initialize()
         {
             API.Value.OnValueAdded += OnValueReceived;
             API.Value.OnValueTierReached += OnValueReceived;
         }
 
-        private void OnDisable()
+        public static void Uninitialize()
         {
             API.Value.OnValueAdded -= OnValueReceived;
             API.Value.OnValueTierReached -= OnValueReceived;
         }
 
-        private void OnValueReceived(PackedValue value)
+        private static void OnValueReceived(PackedValue value)
         {
             if (!Settings.UseAnnouncer)
             {
@@ -57,37 +28,13 @@ namespace NEP.ScoreLab.Audio
             
             if(value.EventAudio != null)
             {
-                Play(value.EventAudio);
+                Play(value.EventAudio.Clip);
             }
         }
 
-        public void Play(AudioClip clip)
+        public static void Play(AudioClip clip)
         {
-#if DEBUG
             BoneLib.Audio.Play2DOneShot(clip, BoneLib.Audio.InHead);
-            return;
-#endif
-            GameObject inactiveSource = GetFirstInactive();
-            AudioSource source = inactiveSource.GetComponent<AudioSource>();
-
-            if(source != null)
-            {
-                source.clip = clip;
-                inactiveSource.SetActive(true);
-            }
-        }
-
-        private GameObject GetFirstInactive()
-        {
-            for(int i = 0; i < _pooledObjects.Count; i++)
-            {
-                if (!_pooledObjects[i].gameObject.activeInHierarchy)
-                {
-                    return _pooledObjects[i];
-                }
-            }
-
-            return null;
         }
     }
 }

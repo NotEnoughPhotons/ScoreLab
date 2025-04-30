@@ -58,6 +58,11 @@ namespace NEP.ScoreLab.Core
 
         public static void Add(PackedValue value)
         {
+            if (value == null)
+            {
+                return;
+            }
+            
             if (value.PackedValueType == PackedValue.PackedType.Score)
             {
                 SetPackedScore((PackedScore)value);
@@ -281,6 +286,11 @@ namespace NEP.ScoreLab.Core
         {
             var Event = ValueManager.Get(eventType);
 
+            if (Event == null)
+            {
+                return null;
+            }
+            
             if (Event.PackedValueType == PackedValue.PackedType.Score)
             {
                 var scoreEvent = (PackedScore)Event;

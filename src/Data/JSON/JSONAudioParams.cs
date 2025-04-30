@@ -7,33 +7,20 @@ namespace NEP.ScoreLab.Data
 {
     public struct JSONAudioParams
     {
-        public AudioClip sound;
+        public string sound;
         public float volume;
         public float pitch;
         
-        public bool FromJSON(string pathToJson)
+        public bool FromJSON(JObject jObject)
         {
-            // Check the bank for a loaded sound
-            using (StreamReader sr = new StreamReader(pathToJson))
+            if (jObject == null)
             {
-                using (JsonTextReader jsonReader = new JsonTextReader(sr))
-                {
-                    JObject data = JToken.ReadFrom(jsonReader) as JObject;
-                    JArray array = data["clips"] as JArray;
-
-                    if (data == null || array == null)
-                    {
-                        return false;
-                    }
-
-                    for (int i = 0; i < array.Count; i++)
-                    {
-                        string clipName = array[i].Value<string>();
-                        sound = 
-                    }
-                }
+                return false;
             }
-
+            
+            sound = jObject["Clip"].Value<string>();
+            volume = jObject["Volume"].Value<float>();
+            pitch = jObject["Pitch"].Value<float>();
             return true;
         }
     }

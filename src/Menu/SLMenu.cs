@@ -23,7 +23,7 @@ namespace NEP.ScoreLab.Menu
                 int index = i;
                 var manifest = HUDLoader.LoadedHUDManifests[index];
 
-                var function = _hudPage.CreateFunction(manifest.Name, Color.white, () => HUDManager.Instance.LoadHUD(manifest.Name));
+                var function = _hudPage.CreateFunction(manifest.Name, Color.white, () => SelectHUD(manifest.Name));
                 function.Logo = manifest.Logo;
             }
         }
@@ -37,9 +37,15 @@ namespace NEP.ScoreLab.Menu
                 int index = i;
                 var manifest = HUDLoader.LoadedHUDManifests[index];
 
-                var function = _hudPage.CreateFunction(manifest.Name, Color.white, () => HUDManager.Instance.LoadHUD(manifest.Name));
+                var function = _hudPage.CreateFunction(manifest.Name, Color.white, () => SelectHUD(manifest.Name));
                 function.Logo = manifest.Logo;
             }
+        }
+
+        private static void SelectHUD(string name)
+        {
+            ValueManager.UsePackage(name);
+            HUDManager.Instance.LoadHUD(name);
         }
     }
 }

@@ -5,75 +5,47 @@ namespace NEP.ScoreLab.Data
 {
     public static class ValueManager
     {
-        public static Dictionary<string, PackedValue> ValueTable { get; private set; }
+        public static Dictionary<string, ValuePackage> Packages { get; private set; }
+        public static ValuePackage ActivePackage { get; private set; }
         public static Dictionary<string, int> HighScoreTable;
-        public static JSONScore[] Scores { get; private set; }
-        public static JSONMult[] Multipliers { get; private set; }
-
-        private static string[] _scoreFiles;
-        private static string[] _multiplierFiles;
-
-        private static readonly string Path_ScoreData = Path.Combine(DataManager.Path_Mod, "Data/Score");
-        private static readonly string Path_MultiplierData = Path.Combine(DataManager.Path_Mod, "Data/Multiplier");
+        
         private static readonly string Path_HighScoreData = Path.Combine(DataManager.Path_Mod, "Data/High Score");
 
         private static readonly string File_HighScores = Path.Combine(Path_HighScoreData, "high_score_table.json");
 
         public static void Initialize()
         {
-            Directory.CreateDirectory(Path_ScoreData);
-            Directory.CreateDirectory(Path_MultiplierData);
-
-            ValueTable = new Dictionary<string, PackedValue>();
-            Scores = GetScores();
-            Multipliers = GetMultipliers();
             HighScoreTable = new Dictionary<string, int>();
+            Packages = new Dictionary<string, ValuePackage>();
             // HighScoreTable = ReadHighScore();
-            CreateScoreObjects();
-            CreateMultiplierObjects();
+            foreach (var manifest in HUDLoader.LoadedHUDManifests)
+            {
+                JSONScore[] score = GetScoresForHUD(manifest.Name);
+                JSONMult[] multipliers = GetMultipliersForHUD(manifest.Name);
+                PackedScore[] scoreObjects = CreateScoreObjects(score);
+                PackedMultiplier[] multiplierObjects = CreateMultiplierObjects(multipliers);
+                Packages.Add(manifest.Name, new ValuePackage(scoreObjects, multiplierObjects));
+            }
+
+            UsePackage("Coda");
         }
 
+        public static void UsePackage(string name)
+        {
+            if (Packages.TryGetValue(name, out ValuePackage package))
+            {
+                ActivePackage = package;
+            }
+        }
+        
         public static PackedValue Get(string eventType)
         {
-            return ValueTable[eventType];
-        }
-
-        public static PackedScore GetScore(string eventType)
-        {
-            PackedScore value = (PackedScore)Get(eventType);
-            PackedScore score = new PackedScore()
+            if (ActivePackage.Values.TryGetValue(eventType, out PackedValue value))
             {
-                eventType = value.eventType,
-                Stackable = value.Stackable,
-                EventAudio = value.EventAudio,
-                Name = value.Name,
-                Score = value.Score,
-                AccumulatedScore = value.Score,
-                DecayTime = value.DecayTime,
-                TierRequirement = value.TierRequirement,
-                Tiers = value.Tiers
-            };
+                return value;
+            }
 
-            return score;
-        }
-
-        public static PackedMultiplier GetMultiplier(string eventType)
-        {
-            PackedMultiplier value = (PackedMultiplier)Get(eventType);
-            PackedMultiplier mult = new PackedMultiplier()
-            {
-                eventType = value.eventType,
-                Stackable = value.Stackable,
-                EventAudio = value.EventAudio,
-                Name = value.Name,
-                Multiplier = value.Multiplier,
-                DecayTime = value.DecayTime,
-                Condition = value.Condition,
-                TierRequirement = value.TierRequirement,
-                Tiers = value.Tiers
-            };
-
-            return mult;
+            return null;
         }
 
         public static Dictionary<string, int> ReadHighScore()
@@ -82,7 +54,7 @@ namespace NEP.ScoreLab.Data
 
             if (!Directory.Exists(Path_HighScoreData))
             {
-                Debug.LogWarning("High score file doesn't exist! Creating one.");
+                Main.Logger.Warning("High score file doesn't exist! Creating one.");
                 Directory.CreateDirectory(Path_HighScoreData);
                 return null;
             }
@@ -96,7 +68,7 @@ namespace NEP.ScoreLab.Data
 
             if (!File.Exists(directory))
             {
-                Debug.LogWarning("High score file doesn't exist! Creating one.");
+                Main.Logger.Warning("High score file doesn't exist! Creating one.");
                 File.Create(directory);
                 return;
             }
@@ -113,39 +85,61 @@ namespace NEP.ScoreLab.Data
             HighScoreTable.Add(sceneName, bestScore);
         }
 
-        private static JSONScore[] GetScores()
+        private static JSONScore[] GetScoresForHUD(string name)
         {
-            _scoreFiles = DataManager.GetAllFiles(Path_ScoreData, ".json");
+            string hudPath = DataManager.Path_CustomUIs;
+            string dataPath = Path.Combine(hudPath, name + "/Data/Score");
+
+            if (!Directory.Exists(dataPath))
+            {
+                Main.Logger.Warning($"HUD {name} doesn't have a score data folder!");
+                return null;
+            }
+            
+            string[] files = DataManager.GetAllFiles(dataPath, ".json");
+            
             List<JSONScore> scores = new List<JSONScore>();
 
-            foreach (var file in _scoreFiles)
+            foreach (var file in files)
             {
                 var data = ReadScoreData(file);
                 scores.Add(data);
             }
-
+            
             return scores.ToArray();
         }
 
-        private static JSONMult[] GetMultipliers()
+        private static JSONMult[] GetMultipliersForHUD(string name)
         {
-            _multiplierFiles = DataManager.GetAllFiles(Path_MultiplierData, ".json");
-            List<JSONMult> multipliers = new List<JSONMult>();
-
-            foreach (var file in _multiplierFiles)
+            string hudPath = DataManager.Path_CustomUIs;
+            string dataPath = Path.Combine(hudPath, name + "/Data/Multiplier");
+            
+            if (!Directory.Exists(dataPath))
             {
+                Main.Logger.Warning($"HUD {name} doesn't have a multiplier data folder!");
+                return null;
+            }
+            
+            string[] files = DataManager.GetAllFiles(dataPath, ".json");
+                        
+            List<JSONMult> multipliers = new List<JSONMult>();
+            
+            foreach (var file in files)
+            { 
                 var data = ReadMultiplierData(file);
                 multipliers.Add(data);
             }
-
+                        
             return multipliers.ToArray();
         }
-
-        private static void CreateScoreObjects()
+        
+        private static PackedScore[] CreateScoreObjects(JSONScore[] scores)
         {
-            foreach (var score in Scores)
+            List<PackedScore> scoreObjects = new List<PackedScore>();
+            
+            foreach (var score in scores)
             {
-                var data = new PackedScore(score);
+                var packedScore = new PackedScore(score);
                 
                 if (score.Tiers != null && score.Tiers.Length > 0)
                 {
@@ -154,53 +148,54 @@ namespace NEP.ScoreLab.Data
                     foreach (var tier in score.Tiers)
                     {
                         var tierData = new PackedScore(tier, true);
-                        tierData.eventType = data.eventType;
-
-                        if (tier.EventAudio != null)
-                        {
-                            AudioClip clip = DataManager.Audio.GetClip(tier.EventAudio);
-                            tierData.EventAudio = clip;
-                        }
-
+                        tierData.eventType = packedScore.eventType;
+                        
                         tiers.Add(tierData);
                     }
 
-                    data.Tiers = tiers.ToArray();
+                    packedScore.Tiers = tiers.ToArray();
                 }
-
-                ValueTable.Add(score.EventType, data);
+                
+                scoreObjects.Add(packedScore);
             }
+
+            return scoreObjects.ToArray();
         }
 
-        private static void CreateMultiplierObjects()
+        private static PackedMultiplier[] CreateMultiplierObjects(JSONMult[] multipliers)
         {
-            foreach (var mult in Multipliers)
+            List<PackedMultiplier> multObjects = new List<PackedMultiplier>();
+            
+            foreach (var multiplier in multipliers)
             {
-                var data = new PackedMultiplier(mult);
-
-                if (mult.Tiers != null && mult.Tiers.Length > 0)
+                var packedMult = new PackedMultiplier(multiplier);
+                
+                if (multiplier.Tiers != null && multiplier.Tiers.Length > 0)
                 {
                     List<PackedMultiplier> tiers = new List<PackedMultiplier>();
 
-                    foreach (var tier in mult.Tiers)
+                    foreach (var tier in multiplier.Tiers)
                     {
                         var tierData = new PackedMultiplier(tier, true);
-                        tierData.eventType = data.eventType;
-
+                        tierData.eventType = packedMult.eventType;
+                        
                         tiers.Add(tierData);
                     }
 
-                    data.Tiers = tiers.ToArray();
+                    packedMult.Tiers = tiers.ToArray();
                 }
 
-                ValueTable.Add(mult.EventType, data);
+                multObjects.Add(packedMult);
             }
+
+            return multObjects.ToArray();
         }
 
         private static JSONScore ReadScoreData(string file)
         {
-            var data = File.ReadAllText(file);
-            return JsonConvert.DeserializeObject<JSONScore>(data);
+            JSONScore data = new JSONScore();
+            data.FromJSON(file);
+            return data;
         }
 
         private static JSONMult ReadMultiplierData(string file)

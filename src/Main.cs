@@ -1,5 +1,5 @@
 ﻿using MelonLoader;
-
+using NEP.ScoreLab.Audio;
 using UnityEngine;
 
 using NEP.ScoreLab.Core;
@@ -44,13 +44,13 @@ namespace NEP.ScoreLab
             ScoreTracker.Initialize();
             DataManager.Initialize();
             ValueManager.Initialize();
+            AudioManager.Initialize();
             ScoreDirector.Patches.InitPatches();
         }
 
         public void OnMarrowSceneLoaded(MarrowSceneInfo sceneInfo)
         {
             new GameObject("[ScoreLab] - HUD Manager").AddComponent<HUDManager>();
-            new GameObject("[ScoreLab] - Audio Manager").AddComponent<Audio.AudioManager>();
             
             // TODO: Add high scores, and add an option to reset level progress
             ScoreTracker.ResetScore();
@@ -69,7 +69,7 @@ namespace NEP.ScoreLab
 
         public override void OnDeinitializeMelon()
         {
-            
+            AudioManager.Uninitialize();
         }
     }
 }
