@@ -18,7 +18,7 @@ namespace NEP.ScoreLab.HUD
         
         private void Awake()
         {
-            if (name == "MultiplierDescriptor")
+            if (name == "MultiplierDescriptor" || name == "Descriptor")
             {
                 ModuleType = UIModuleType.Descriptor;
             }
