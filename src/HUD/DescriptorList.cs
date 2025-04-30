@@ -19,8 +19,6 @@ namespace NEP.ScoreLab.HUD
         public int count = 6;
 
         public List<Module> Modules;
-
-        private bool _mixDescriptors = false;
         
         private void Awake()
         {
@@ -41,10 +39,6 @@ namespace NEP.ScoreLab.HUD
             else if (name == "MultiplierDescriptors")
             {
                 packedType = PackedValue.PackedType.Multiplier;
-            }
-            else if (name == "MixDescriptors")
-            {
-                _mixDescriptors = true;
             }
         }
 
@@ -78,7 +72,7 @@ namespace NEP.ScoreLab.HUD
                 return;
             }
 
-            if (value.PackedValueType != packedType && !_mixDescriptors)
+            if (value.PackedValueType != packedType)
             {
                 return;
             }
