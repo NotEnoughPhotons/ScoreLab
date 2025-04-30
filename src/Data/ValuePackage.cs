@@ -5,15 +5,21 @@ namespace NEP.ScoreLab.Data
         public ValuePackage(PackedScore[] scores, PackedMultiplier[] multipliers)
         {
             Values = new Dictionary<string, PackedValue>();
-            
-            foreach (var score in scores)
+
+            if (scores != null)
             {
-                Values.Add(score.eventType, score);
+                foreach (var score in scores)
+                {
+                    Values.Add(score.eventType, score);
+                }
             }
 
-            foreach (var mult in multipliers)
+            if (multipliers != null)
             {
-                Values.Add(mult.eventType, mult);
+                foreach (var mult in multipliers)
+                {
+                    Values.Add(mult.eventType, mult);
+                }
             }
         }
 

@@ -135,6 +135,11 @@ namespace NEP.ScoreLab.Data
         
         private static PackedScore[] CreateScoreObjects(JSONScore[] scores)
         {
+            if (scores == null)
+            {
+                return null;
+            }
+            
             List<PackedScore> scoreObjects = new List<PackedScore>();
             
             foreach (var score in scores)
@@ -164,6 +169,11 @@ namespace NEP.ScoreLab.Data
 
         private static PackedMultiplier[] CreateMultiplierObjects(JSONMult[] multipliers)
         {
+            if (multipliers == null)
+            {
+                return null;
+            }
+            
             List<PackedMultiplier> multObjects = new List<PackedMultiplier>();
             
             foreach (var multiplier in multipliers)
