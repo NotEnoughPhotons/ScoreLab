@@ -95,7 +95,7 @@ namespace NEP.ScoreLab.HUD
                     _currentValue = _targetValue;
                 }
                 
-                SetText(_value, _currentValue.ToString("F2") + "x");
+                SetText(_value, _currentValue.ToString("F2"));
             }
             
             if (_packedMultiplier != null)
