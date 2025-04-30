@@ -102,7 +102,11 @@ namespace NEP.ScoreLab.Data
                 // Check if the bundle has a valid HUD object
                 GameObject hudObject = hudBundle.LoadPersistentAsset<GameObject>($"[SLHUD] - {hudManifest.Name}");
                     
-                // This isn't necessary to work, but get any audio clips
+                // I couldn't use the AssetBundle.LoadAllAssets<T> cause it was stripped.
+                // Fuck you, IL2CPP. How are you going to tell me that it's stripped?
+                // Literally at some point ALL asset bundle objects are going to be loaded -
+                // so why not use THAT function? Jesus Tapdancing Christ.
+                // Let's just use this for now.
                 Il2CppReferenceArray<UnityEngine.Object> clipObjects = hudBundle.LoadAllAssets();
                 
                 // Optionally, retrieve the HUDs logo if it exists
