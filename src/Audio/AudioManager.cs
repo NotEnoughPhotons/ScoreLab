@@ -28,13 +28,13 @@ namespace NEP.ScoreLab.Audio
             
             if(value.EventAudio != null)
             {
-                Play(value.EventAudio.Clip);
+                Play(value.EventAudio.Clip, value.EventAudio.Volume, value.EventAudio.Pitch);
             }
         }
 
-        public static void Play(AudioClip clip)
+        public static void Play(AudioClip clip, float volume = 1f, float pitch = 1f)
         {
-            BoneLib.Audio.Play2DOneShot(clip, BoneLib.Audio.InHead);
+            BoneLib.Audio.Play2DOneShot(clip, BoneLib.Audio.InHead, volume, pitch);
         }
     }
 }
