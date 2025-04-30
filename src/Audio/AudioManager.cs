@@ -1,3 +1,4 @@
+using Il2CppSLZ.Marrow.Audio;
 using UnityEngine;
 
 using NEP.ScoreLab.Core;
@@ -34,7 +35,7 @@ namespace NEP.ScoreLab.Audio
 
         public static void Play(AudioClip clip, float volume = 1f, float pitch = 1f)
         {
-            BoneLib.Audio.Play2DOneShot(clip, BoneLib.Audio.InHead, volume, pitch);
+            BoneLib.Audio.PlayAtPoint(clip, Vector3.zero, BoneLib.Audio.InHead, volume, pitch, 0f);
         }
     }
 }
