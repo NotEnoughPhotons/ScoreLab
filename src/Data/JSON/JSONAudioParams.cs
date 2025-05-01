@@ -7,7 +7,7 @@ namespace NEP.ScoreLab.Data
 {
     public struct JSONAudioParams
     {
-        public string sound;
+        public string[] sounds;
         public float volume;
         public float pitch;
         
@@ -18,7 +18,17 @@ namespace NEP.ScoreLab.Data
                 return false;
             }
             
-            sound = jObject["Clip"].Value<string>();
+            JArray soundArray = jObject["Sounds"] as JArray;
+
+            if (soundArray != null)
+            {
+                sounds = new string[soundArray.Count];
+                for (int i = 0; i < sounds.Length; i++)
+                {
+                    sounds[i] = soundArray[i].Value<string>();
+                }
+            }
+            
             volume = jObject["Volume"].Value<float>();
             pitch = jObject["Pitch"].Value<float>();
             return true;

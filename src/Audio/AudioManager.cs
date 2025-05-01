@@ -1,8 +1,9 @@
-using Il2CppSLZ.Marrow.Audio;
 using UnityEngine;
 
 using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
+
+using Random = UnityEngine.Random;
 
 namespace NEP.ScoreLab.Audio
 {
@@ -29,7 +30,19 @@ namespace NEP.ScoreLab.Audio
             
             if(value.EventAudio != null)
             {
-                Play(value.EventAudio.Clip, value.EventAudio.Volume, value.EventAudio.Pitch);
+                AudioClip clip = null;
+
+                if (value.EventAudio.Clips.Length == 1)
+                {
+                    clip = value.EventAudio.Clips[0];
+                }
+                else
+                {
+                    int randomIndex = Random.Range(0, value.EventAudio.Clips.Length);
+                    clip = value.EventAudio.Clips[randomIndex];
+                }
+                
+                Play(clip, value.EventAudio.Volume, value.EventAudio.Pitch);
             }
         }
 
