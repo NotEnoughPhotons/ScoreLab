@@ -13,12 +13,14 @@ namespace NEP.ScoreLab.Audio
         {
             API.Value.OnValueAdded += OnValueReceived;
             API.Value.OnValueTierReached += OnValueReceived;
+            API.Value.OnValueAccumulated += OnValueReceived;
         }
 
         public static void Uninitialize()
         {
             API.Value.OnValueAdded -= OnValueReceived;
             API.Value.OnValueTierReached -= OnValueReceived;
+            API.Value.OnValueAccumulated -= OnValueReceived;
         }
 
         private static void OnValueReceived(PackedValue value)
