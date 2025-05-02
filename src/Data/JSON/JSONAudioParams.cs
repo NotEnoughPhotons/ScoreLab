@@ -18,7 +18,7 @@ namespace NEP.ScoreLab.Data
                 return false;
             }
             
-            JArray soundArray = jObject["Sounds"] as JArray;
+            JArray soundArray = jObject["Clips"] as JArray;
 
             if (soundArray != null)
             {
