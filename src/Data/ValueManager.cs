@@ -40,6 +40,11 @@ namespace NEP.ScoreLab.Data
         
         public static PackedValue Get(string eventType)
         {
+            if (ActivePackage.Values == null)
+            {
+                return null;
+            }
+            
             if (ActivePackage.Values.TryGetValue(eventType, out PackedValue value))
             {
                 return value;
