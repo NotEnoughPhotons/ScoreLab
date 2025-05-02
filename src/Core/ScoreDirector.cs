@@ -6,6 +6,7 @@ using Il2CppSLZ.Bonelab;
 using Il2CppSLZ.Marrow;
 using Il2CppSLZ.Marrow.PuppetMasta;
 using Il2CppSLZ.Marrow.AI;
+using Il2CppSLZ.Marrow.Interaction;
 
 using NEP.ScoreLab.Data;
 
@@ -18,6 +19,43 @@ namespace NEP.ScoreLab.Core
     {
         public static class Patches
         {
+            [HarmonyLib.HarmonyPatch(typeof(Projectile), nameof(Projectile.Awake))]
+            public static class ProjectilePatch
+            {
+                public static void Postfix(Projectile __instance)
+                {
+                    Action<Collider, Vector3, Vector3> action = OnProjectileCollision;
+                    __instance.onCollision.AddListener(action);
+                }
+
+                private static void OnProjectileCollision(Collider collider, Vector3 world, Vector3 normal)
+                {
+                    MarrowBody head = MarrowBody.Cache.Get(collider.gameObject);
+
+                    if (head == null)
+                    {
+                        return;
+                    }
+                    
+                    TriggerRefProxy proxy = head.GetComponent<TriggerRefProxy>();
+
+                    if (proxy == null)
+                    {
+                        return;
+                    }
+
+                    if (proxy.aiManager.isDead)
+                    {
+                        return;
+                    }
+                    
+                    if (proxy.targetHead.gameObject == head.gameObject)
+                    {
+                        ScoreTracker.Add(EventType.Score.Headshot);
+                    }
+                }
+            }
+            
             [HarmonyLib.HarmonyPatch(typeof(RigManager), nameof(RigManager.SwitchAvatar))]
             public static class RigManagerSwapAvatarPatch
             {
@@ -171,6 +209,18 @@ namespace NEP.ScoreLab.Core
                 public static void Postfix(PhysicsRig __instance)
                 {
                     IsPlayerRagdolled = false;
+                }
+            }
+
+            [HarmonyLib.HarmonyPatch(typeof(TimeManager), nameof(TimeManager.OnPostTimeUpdate))]
+            public static class TimeManagerPatch
+            {
+                public static void Postfix()
+                {
+                    if (TimeManager.slowMoEnabled)
+                    {
+                        ScoreTracker.Add(EventType.Mult.SlowMo);
+                    }
                 }
             }
 

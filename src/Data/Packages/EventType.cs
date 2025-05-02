@@ -7,6 +7,7 @@ namespace NEP.ScoreLab.Data
         public static class Score
         {
             public static readonly string Kill = "SCORE_KILL";
+            public static readonly string Headshot = "SCORE_HEADSHOT";
             public static readonly string EnemyMidAirKill = "SCORE_KILL_IN_AIR";
             public static readonly string GameWaveCompleted = "SCORE_WAVE_COMPLETE";
             public static readonly string GameRoundCompleted = "SCORE_ROUND_COMPLETE";
@@ -22,6 +23,7 @@ namespace NEP.ScoreLab.Data
             public static readonly string SecondWind = "MULT_SECONDWIND";
             public static readonly string Ragolled = "MULT_RAGDOLLED";
             public static readonly string SwappedAvatars = "MULT_SWAPPED_AVATARS";
+            public static readonly string SlowMo = "MULT_SLOWMO";
         }
     }
 }
