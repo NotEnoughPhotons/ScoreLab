@@ -119,20 +119,22 @@ namespace NEP.ScoreLab.Core
             }
 
             [HarmonyLib.HarmonyPatch(typeof(Arena_GameController))]
-            [HarmonyLib.HarmonyPatch(nameof(Arena_GameController.Awake))]
-            public static class ArenaGameControllerAwakePatch
+            [HarmonyLib.HarmonyPatch(nameof(Arena_GameController.StartNextWave))]
+            public static class StartNextWavePatch
             {
                 public static void Postfix(Arena_GameController __instance)
                 {
-                    __instance.onRoundEnd.AddListener(new System.Action(() =>
-                    {
-                        ScoreTracker.Add(EventType.Score.GameRoundCompleted);
-                    }));
-                    
-                    __instance.onWaveEnd.AddListener(new System.Action(() =>
-                    {
-                        ScoreTracker.Add(EventType.Score.GameWaveCompleted);
-                    }));
+                    ScoreTracker.Add(EventType.Score.GameWaveCompleted);
+                }
+            }
+            
+            [HarmonyLib.HarmonyPatch(typeof(Arena_GameController))]
+            [HarmonyLib.HarmonyPatch(nameof(Arena_GameController.EndOfRound))]
+            public static class StartNextRoundPatch
+            {
+                public static void Postfix(Arena_GameController __instance)
+                {
+                    ScoreTracker.Add(EventType.Score.GameRoundCompleted);
                 }
             }
 
@@ -213,14 +215,31 @@ namespace NEP.ScoreLab.Core
             }
 
             [HarmonyLib.HarmonyPatch(typeof(TimeManager), nameof(TimeManager.OnPostTimeUpdate))]
-            public static class TimeManagerPatch
+            public static class TimeManagerUpdatePatch
+            {
+                private static bool _slowmoSwitch = false;
+                
+                public static void Postfix()
+                {
+                    
+                }
+            }
+            
+            [HarmonyLib.HarmonyPatch(typeof(TimeManager), nameof(TimeManager.INCREASE_TIMESCALE))]
+            public static class TimeManagerIncreaseTimePatch
             {
                 public static void Postfix()
                 {
-                    if (TimeManager.slowMoEnabled)
-                    {
-                        ScoreTracker.Add(EventType.Mult.SlowMo);
-                    }
+                    
+                }
+            }
+            
+            [HarmonyLib.HarmonyPatch(typeof(TimeManager), nameof(TimeManager.DECREASE_TIMESCALE))]
+            public static class TimeManagerDecreaseTimePatch
+            {
+                public static void Postfix()
+                {
+                    
                 }
             }
 
