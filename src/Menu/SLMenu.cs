@@ -16,8 +16,9 @@ namespace NEP.ScoreLab.Menu
             Page modPage = root.CreatePage("ScoreLab", Color.white);
             _hudPage = modPage.CreatePage("HUDs", Color.white);
 
+            #if DEBUG
             modPage.CreateFunction("Reload HUDs", Color.white, () => HUDLoader.ReloadHUDs());
-
+            #endif
             modPage.CreateFloat("HUD Distance", Color.white, 1.125f, 0.025f, 0f, 2f,
                 (value) => Settings.DistanceToCamera = value);
             
