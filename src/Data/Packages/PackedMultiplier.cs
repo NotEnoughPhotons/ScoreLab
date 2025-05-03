@@ -22,6 +22,7 @@ namespace NEP.ScoreLab.Data
             Multiplier = mult.Multiplier;
             Condition = mult.Condition;
             TierRequirement = mult.TierRequirement;
+            EventAudio = new PackedAudioParams(mult.EventAudio);
                 
             if (useTiers)
             {

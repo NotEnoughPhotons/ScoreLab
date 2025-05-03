@@ -10,6 +10,7 @@ namespace NEP.ScoreLab.Data
 
         public float DecayTime;
         public bool Stackable;
+        public JSONAudioParams EventAudio;
 
         public string Name;
         public float Multiplier;
@@ -45,6 +46,7 @@ namespace NEP.ScoreLab.Data
             DecayTime = obj["DecayTime"].Value<float>();
             Stackable = obj["Stackable"].Value<bool>();
             Condition = obj["Condition"].Value<string>();
+            EventAudio.FromJSON(obj["EventAudio"].Value<JObject>());
 
             Name = obj["Name"].Value<string>();
             Multiplier = obj["Multiplier"].Value<float>();
