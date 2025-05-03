@@ -41,7 +41,8 @@ namespace NEP.ScoreLab.Core
                 { "IsPlayerMoving", new Func<bool>(() => ScoreDirector.IsPlayerMoving) },
                 { "IsPlayerSeated", new Func<bool>(() => ScoreDirector.IsPlayerSeated) },
                 { "IsPlayerInAir", new Func<bool>(() => ScoreDirector.IsPlayerInAir) },
-                { "IsPlayerRagdolled", new Func<bool>(() => ScoreDirector.IsPlayerRagdolled) }
+                { "IsPlayerRagdolled", new Func<bool>(() => ScoreDirector.IsPlayerRagdolled) },
+                { "IsSlowMoEnabled", new Func<bool>(() => ScoreDirector.IsSlowMoEnabled) }
             };
 
             public static Func<bool> GetCondition(string cond)

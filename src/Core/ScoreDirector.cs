@@ -245,6 +245,7 @@ namespace NEP.ScoreLab.Core
         public static bool IsPlayerInAir = false;
         public static bool IsPlayerSeated = false;
         public static bool IsPlayerRagdolled = false;
+        public static bool IsSlowMoEnabled = false;
 
         private static bool _playerRecentlySwappedAvatars = false;
     }
