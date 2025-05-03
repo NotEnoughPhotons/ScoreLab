@@ -32,8 +32,13 @@ namespace NEP.ScoreLab.Audio
             
             if(value.EventAudio != null)
             {
+                if (value.EventAudio.Clips == null || value.EventAudio.Clips.Length == 0)
+                {
+                    return;
+                }
+                
                 AudioClip clip = null;
-
+                
                 if (value.EventAudio.Clips.Length == 1)
                 {
                     clip = value.EventAudio.Clips[0];

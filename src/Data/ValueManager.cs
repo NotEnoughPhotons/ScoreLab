@@ -215,8 +215,9 @@ namespace NEP.ScoreLab.Data
 
         private static JSONMult ReadMultiplierData(string file)
         {
-            var data = File.ReadAllText(file);
-            return JsonConvert.DeserializeObject<JSONMult>(data);
+            JSONMult data = new JSONMult();
+            data.FromJSON(file);
+            return data;
         }
     }
 }
