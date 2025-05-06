@@ -44,7 +44,6 @@ namespace NEP.ScoreLab
         public void OnMarrowGameStarted()
         {
             ScoreTracker.Initialize();
-            DataManager.Initialize();
             ValueManager.Initialize();
             AudioManager.Initialize();
             ScoreDirector.Patches.InitPatches();

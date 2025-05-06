@@ -23,7 +23,6 @@
 	  <Compile Include="src\Core\ScoreDirector.cs" />
 	  <Compile Include="src\Core\ScoreTracker.cs" />
 	  <Compile Include="src\Core\Settings.cs" />
-	  <Compile Include="src\Data\DataManager.cs" />
 	  <Compile Include="src\Data\HUDLoader.cs" />
 	  <Compile Include="src\Data\JSON\JSONAudioParams.cs" />
 	  <Compile Include="src\Data\JSON\JSONHudManifest.cs" />

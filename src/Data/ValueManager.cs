@@ -1,4 +1,5 @@
-﻿using NEP.ScoreLab.Core;
+﻿using MelonLoader.Utils;
+using NEP.ScoreLab.Core;
 using UnityEngine;
 using Newtonsoft.Json;
 
@@ -10,9 +11,9 @@ namespace NEP.ScoreLab.Data
         public static ValuePackage ActivePackage { get; private set; }
         public static Dictionary<string, int> HighScoreTable;
         
-        private static readonly string Path_HighScoreData = Path.Combine(DataManager.Path_Mod, "Data/High Score");
-
-        private static readonly string File_HighScores = Path.Combine(Path_HighScoreData, "high_score_table.json");
+        public static readonly string Path_Developer      = Path.Combine(MelonEnvironment.UserDataDirectory, "Not Enough Photons");
+        public static readonly string Path_Mod            = Path.Combine(Path_Developer, "ScoreLab");
+        private static readonly string File_HighScores = Path.Combine(Path_Mod, "high_score_table.json");
 
         public static void Initialize()
         {
@@ -31,6 +32,22 @@ namespace NEP.ScoreLab.Data
             UsePackage(Settings.SavedHUD);
         }
 
+        public static string[] GetAllFiles(string path, string extensionFilter)
+        {
+            string[] files = Directory.GetFiles(path);
+            List<string> filteredFiles = new List<string>();
+        
+            foreach (string file in files)
+            {
+                if (file.EndsWith(extensionFilter))
+                {
+                    filteredFiles.Add(file);
+                }
+            }
+        
+            return filteredFiles.ToArray();
+        }
+        
         public static void UsePackage(string name)
         {
             if (Packages.TryGetValue(name, out ValuePackage package))
@@ -57,14 +74,6 @@ namespace NEP.ScoreLab.Data
         public static Dictionary<string, int> ReadHighScore()
         {
             string directory = File_HighScores;
-
-            if (!Directory.Exists(Path_HighScoreData))
-            {
-                Main.Logger.Warning("High score file doesn't exist! Creating one.");
-                Directory.CreateDirectory(Path_HighScoreData);
-                return null;
-            }
-
             return JsonConvert.DeserializeObject(directory) as Dictionary<string, int>;
         }
 
@@ -93,7 +102,7 @@ namespace NEP.ScoreLab.Data
 
         private static JSONScore[] GetScoresForHUD(string name)
         {
-            string hudPath = DataManager.Path_CustomUIs;
+            string hudPath = Path_Mod;
             string dataPath = Path.Combine(hudPath, name + "/Data/Score");
 
             if (!Directory.Exists(dataPath))
@@ -102,7 +111,7 @@ namespace NEP.ScoreLab.Data
                 return null;
             }
             
-            string[] files = DataManager.GetAllFiles(dataPath, ".json");
+            string[] files = GetAllFiles(dataPath, ".json");
             
             List<JSONScore> scores = new List<JSONScore>();
 
@@ -117,7 +126,7 @@ namespace NEP.ScoreLab.Data
 
         private static JSONMult[] GetMultipliersForHUD(string name)
         {
-            string hudPath = DataManager.Path_CustomUIs;
+            string hudPath = Path_Mod;
             string dataPath = Path.Combine(hudPath, name + "/Data/Multiplier");
             
             if (!Directory.Exists(dataPath))
@@ -126,7 +135,7 @@ namespace NEP.ScoreLab.Data
                 return null;
             }
             
-            string[] files = DataManager.GetAllFiles(dataPath, ".json");
+            string[] files = GetAllFiles(dataPath, ".json");
                         
             List<JSONMult> multipliers = new List<JSONMult>();
             
