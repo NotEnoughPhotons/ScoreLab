@@ -28,7 +28,6 @@ namespace NEP.ScoreLab.Data
                     
                     Name = data["name"].Value<string>();
                     Author = data["author"].Value<string>();
-                    Description = data["description"].Value<string>();
                     AssetName = data["assetName"].Value<string>();
                 }
             }
