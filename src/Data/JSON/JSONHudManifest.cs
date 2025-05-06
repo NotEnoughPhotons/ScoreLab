@@ -10,7 +10,7 @@ namespace NEP.ScoreLab.Data
         public string Author;
         public string Description;
         public string[] Tags;
-        public string GUID;
+        public string AssetName;
         public Texture2D Logo;
 
         public bool FromJSON(string pathToJson)
@@ -29,6 +29,7 @@ namespace NEP.ScoreLab.Data
                     Name = data["name"].Value<string>();
                     Author = data["author"].Value<string>();
                     Description = data["description"].Value<string>();
+                    AssetName = data["assetName"].Value<string>();
                 }
             }
 

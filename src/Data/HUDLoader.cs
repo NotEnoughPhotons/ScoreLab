@@ -101,7 +101,7 @@ namespace NEP.ScoreLab.Data
                 AssetBundle hudBundle = AssetBundle.LoadFromFile(hud);
                     
                 // Check if the bundle has a valid HUD object
-                GameObject hudObject = hudBundle.LoadPersistentAsset<GameObject>($"[SLHUD] - {hudManifest.Name}");
+                GameObject hudObject = hudBundle.LoadPersistentAsset<GameObject>(hudManifest.AssetName);
                     
                 // I couldn't use the AssetBundle.LoadAllAssets<T> cause it was stripped.
                 // Fuck you, IL2CPP. How are you going to tell me that it's stripped?
