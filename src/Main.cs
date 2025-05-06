@@ -15,11 +15,11 @@ namespace NEP.ScoreLab
 {
     public static class BuildInfo
     {
-        public const string Name = "ScoreLab"; // Name of the Mod.  (MUST BE SET)
-        public const string Author = "Not Enough Photons"; // Author of the Mod.  (Set as null if none)
-        public const string Company = "Not Enough Photons"; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "1.0.0"; // Version of the Mod.  (MUST BE SET)
-        public const string DownloadLink = "https://thunderstore.io/c/bonelab/p/NotEnoughPhotons/ScoreLab"; // Download Link for the Mod.  (Set as null if none)
+        public const string Name = "ScoreLab";
+        public const string Author = "Not Enough Photons";
+        public const string Company = "Not Enough Photons";
+        public const string Version = "1.0.0";
+        public const string DownloadLink = "https://thunderstore.io/c/bonelab/p/NotEnoughPhotons/ScoreLab";
     }
 
     public class Main : MelonMod
@@ -29,6 +29,8 @@ namespace NEP.ScoreLab
         public override void OnLateInitializeMelon()
         {
             Logger = new MelonLogger.Instance("ScoreLab");
+            
+            Settings.CreatePreferences();
             
             Hooks.Initialize();
 
@@ -50,7 +52,7 @@ namespace NEP.ScoreLab
 
         public void OnMarrowSceneLoaded(MarrowSceneInfo sceneInfo)
         {
-            new GameObject("[ScoreLab] - HUD Manager").AddComponent<HUDManager>();
+            HUDManager.Initialize();
             
             // TODO: Add high scores, and add an option to reset level progress
             ScoreTracker.ResetScore();
@@ -69,7 +71,9 @@ namespace NEP.ScoreLab
 
         public override void OnDeinitializeMelon()
         {
+            HUDManager.Uninitialize();
             AudioManager.Uninitialize();
+            Settings.Save();
         }
     }
 }

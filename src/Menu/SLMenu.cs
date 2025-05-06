@@ -48,8 +48,9 @@ namespace NEP.ScoreLab.Menu
 
         private static void SelectHUD(string name)
         {
+            Settings.SavedHUD = name;
             ValueManager.UsePackage(name);
-            HUDManager.Instance.LoadHUD(name);
+            HUDManager.LoadHUD(name);
         }
     }
 }

@@ -1,35 +1,32 @@
+using NEP.ScoreLab.Core;
 using UnityEngine;
 
 using NEP.ScoreLab.Data;
 
 namespace NEP.ScoreLab.HUD
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
-    public class HUDManager : MonoBehaviour
+    public static class HUDManager
     {
-        public HUDManager(System.IntPtr ptr) : base(ptr) { }
+        public static List<HUD> LoadedHUDs { get; private set; }
+        public static HUD ActiveHUD { get; private set; }
+        public static HUD LastHUD { get; private set; }
 
-        public static HUDManager Instance { get; private set; }
+        private static GameObject _parentObject;
         
-        public List<HUD> LoadedHUDs { get; private set; }
-        public HUD ActiveHUD { get; private set; }
-        public HUD LastHUD { get; private set; }
-        
-        private void Awake()
+        internal static void Initialize()
         {
-            Instance = this;
-            
+            _parentObject = new GameObject("[ScoreLab] - HUD Container");
             LoadedHUDs = new List<HUD>();
-
             Populate();
+            LoadHUD(Settings.SavedHUD);
         }
 
-        private void Start()
+        internal static void Uninitialize()
         {
-            LoadHUD("Coda");
+            
         }
 
-        public void Populate()
+        public static void Populate()
         {
             for(int i = 0; i < HUDLoader.LoadedHUDManifests.Count; i++)
             {
@@ -46,12 +43,12 @@ namespace NEP.ScoreLab.HUD
                 }
 
                 LoadedHUDs.Add(hud);
-                hud.SetParent(transform);
+                hud.SetParent(_parentObject.transform);
                 hud.gameObject.SetActive(false);
             }
         }
         
-        public void LoadHUD(string name)
+        public static void LoadHUD(string name)
         {
             if (ActiveHUD != null)
             {
@@ -77,26 +74,26 @@ namespace NEP.ScoreLab.HUD
             ActiveHUD.SetParent(null);
         }
 
-        public void UnloadHUD()
+        public static void UnloadHUD()
         {
             if(ActiveHUD != null)
             {
-                ActiveHUD.SetParent(transform);
+                ActiveHUD.SetParent(_parentObject.transform);
                 ActiveHUD.gameObject.SetActive(false);
                 ActiveHUD = null;
             }
         }
 
-        public void DestroyHUD()
+        public static void DestroyHUD()
         {
             if (ActiveHUD != null)
             {
-                Destroy(ActiveHUD);
+                GameObject.Destroy(ActiveHUD);
                 ActiveHUD = null;
             }
         }
 
-        public void DestroyLoadedHUDs()
+        public static void DestroyLoadedHUDs()
         {
             if (LoadedHUDs == null || LoadedHUDs.Count == 0)
             {
@@ -105,7 +102,7 @@ namespace NEP.ScoreLab.HUD
 
             foreach (var hud in LoadedHUDs)
             {
-                Destroy(hud.gameObject);
+                GameObject.Destroy(hud.gameObject);
             }
             
             LoadedHUDs.Clear();

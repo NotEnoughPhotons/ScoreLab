@@ -3,6 +3,7 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 
 using MelonLoader.Utils;
+using NEP.ScoreLab.Core;
 using NEP.ScoreLab.HUD;
 using NEP.ScoreLab.Menu;
 
@@ -142,12 +143,12 @@ namespace NEP.ScoreLab.Data
 
         public static void ReloadHUDs()
         {
-            if (HUDManager.Instance.ActiveHUD != null)
+            if (HUDManager.ActiveHUD != null)
             {
-                HUDManager.Instance.DestroyHUD();
+                HUDManager.DestroyHUD();
             }
             
-            HUDManager.Instance.DestroyLoadedHUDs();
+            HUDManager.DestroyLoadedHUDs();
 
             HUDAudioBank.Clear();
             LoadedHUDManifests.Clear();
@@ -164,8 +165,8 @@ namespace NEP.ScoreLab.Data
             
             SLMenu.RefreshHUDPage();
             
-            HUDManager.Instance.Populate();
-            HUDManager.Instance.LoadHUD(HUDManager.Instance.LastHUD.name);
+            HUDManager.Populate();
+            HUDManager.LoadHUD(Settings.SavedHUD);
         }
     }
 }

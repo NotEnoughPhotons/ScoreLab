@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using NEP.ScoreLab.Core;
+using UnityEngine;
 using Newtonsoft.Json;
 
 namespace NEP.ScoreLab.Data
@@ -27,7 +28,7 @@ namespace NEP.ScoreLab.Data
                 Packages.Add(manifest.Name, new ValuePackage(scoreObjects, multiplierObjects));
             }
 
-            UsePackage("Coda");
+            UsePackage(Settings.SavedHUD);
         }
 
         public static void UsePackage(string name)
