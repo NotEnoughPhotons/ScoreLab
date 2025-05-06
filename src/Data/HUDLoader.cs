@@ -53,9 +53,8 @@ namespace NEP.ScoreLab.Data
         public static void LoadHUDs()
         {
             string modPath = Path.Combine(MelonEnvironment.UserDataDirectory, "Not Enough Photons/ScoreLab");
-            string hudPath = Path.Combine(modPath, "HUDs");
             
-            var folders = Directory.EnumerateDirectories(hudPath);
+            var folders = Directory.EnumerateDirectories(modPath);
 
             foreach (var folder in folders)
             {
