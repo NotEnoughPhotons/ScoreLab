@@ -79,6 +79,9 @@ namespace NEP.ScoreLab.HUD
                 return;
             }
             
+            Settings.SavedHUD = name;
+            ValueManager.UsePackage(name);
+            
             ActiveHUD.gameObject.SetActive(true);
             ActiveHUD.SetParent(null);
         }
