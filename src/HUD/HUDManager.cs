@@ -18,7 +18,16 @@ namespace NEP.ScoreLab.HUD
             _parentObject = new GameObject("[ScoreLab] - HUD Container");
             LoadedHUDs = new List<HUD>();
             Populate();
-            LoadHUD(Settings.SavedHUD);
+
+            if (HUDLoader.LoadedHUDs.ContainsKey(Settings.SavedHUD))
+            {
+                LoadHUD(Settings.SavedHUD);
+            }
+            else
+            {
+                // Load fallback, which is Coda.
+                LoadHUD("Coda");
+            }
         }
 
         internal static void Uninitialize()
