@@ -8,11 +8,12 @@ namespace NEP.ScoreLab.Data
         {
             public static readonly string Kill = "SCORE_KILL";
             public static readonly string Headshot = "SCORE_HEADSHOT";
-            public static readonly string EnemyMidAirKill = "SCORE_KILL_IN_AIR";
+            public static readonly string EnemyMidAirKill = "SCORE_MID_AIR";
             public static readonly string GameWaveCompleted = "SCORE_WAVE_COMPLETED";
             public static readonly string GameRoundCompleted = "SCORE_ROUND_COMPLETED";
             public static readonly string Crabcest = "SCORE_CRABCEST";
             public static readonly string Facehug = "SCORE_FACEHUG";
+            public static readonly string StealthKill = "SCORE_STEALTH_KILL";
         }
 
         public static class Mult
