@@ -69,14 +69,6 @@ namespace NEP.ScoreLab.HUD
 
             transform.position = move;
             transform.rotation = lookRot;
-
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                if (transform.GetChild(i) != null)
-                {
-                    //transform.GetChild(i).LookAt(followTarget);
-                }
-            }
         }
 
         public void SetParent(Transform parent)
