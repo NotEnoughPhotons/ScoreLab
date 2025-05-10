@@ -7,7 +7,7 @@ using Il2CppSLZ.Marrow;
 using Il2CppSLZ.Marrow.PuppetMasta;
 using Il2CppSLZ.Marrow.AI;
 using Il2CppSLZ.Marrow.Interaction;
-
+using Il2CppTriangleNet;
 using NEP.ScoreLab.Data;
 
 using Avatar = Il2CppSLZ.VRMK.Avatar;
@@ -250,15 +250,22 @@ namespace NEP.ScoreLab.Core
 
             public static void OnAIDeath(BehaviourBaseNav behaviour)
             {
+                ScoreTracker.Add(ValueManager.Get(EventType.Score.Kill));
+                ScoreTracker.Add(ValueManager.Get(EventType.Mult.Kill));
+                
                 if(!behaviour.sensors.isGrounded)
                 {
                     ScoreTracker.Add(EventType.Score.EnemyMidAirKill);
                 }
 
-                ScoreTracker.Add(ValueManager.Get(EventType.Score.Kill));
-                ScoreTracker.Add(ValueManager.Get(EventType.Mult.Kill));
+                if (behaviour.sensors.target == null)
+                {
+                    ScoreTracker.Add(EventType.Score.StealthKill);
+                }
             }
         }
+
+        public static readonly string PlayerName = "";
         
         public static bool IsPlayerMoving = false;
         public static bool IsPlayerInAir = false;
