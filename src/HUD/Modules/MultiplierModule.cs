@@ -44,24 +44,8 @@ namespace NEP.ScoreLab.HUD
             }
             else if (ModuleType == UIModuleType.Descriptor)
             {
-                if (PackedValue.Stackable)
-                {
-                    if (PackedValue.TierEventType != null)
-                    {
-                        SetText(_title, _packedMultiplier.Name);
-                        SetText(_value, $"{_packedMultiplier.Multiplier.ToString()}x");
-                    }
-                    else
-                    {
-                        SetText(_title, _packedMultiplier.Name);
-                        SetText(_value, $"{_packedMultiplier.AccumulatedMultiplier.ToString()}x");
-                    }
-                }
-                else
-                {
-                    SetText(_title, _packedMultiplier.Name);
-                    SetText(_value, $"{_packedMultiplier.Multiplier.ToString()}x");
-                }
+                SetText(_title, _packedMultiplier.Name);
+                SetText(_value, $"{_packedMultiplier.Multiplier.ToString()}x");
             }
 
             if (_timeBar != null)
