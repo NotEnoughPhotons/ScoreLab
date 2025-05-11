@@ -21,6 +21,7 @@ namespace NEP.ScoreLab.Menu
             #endif
             modPage.CreateFloat("HUD Distance", Color.white, 1.125f, 0.025f, 0f, 2f,
                 (value) => Settings.DistanceToCamera = value);
+            modPage.CreateEnum("Show HUD", Color.white, Settings.HUDShowMode, (value) => Settings.SetHUDShowMode((HUDShowMode)value));
             
             for (int i = 0; i < HUDLoader.LoadedHUDManifests.Count; i++)
             {

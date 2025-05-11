@@ -1,3 +1,4 @@
+using NEP.NEDebug.Console;
 using NEP.ScoreLab.Core;
 using UnityEngine;
 
@@ -56,7 +57,25 @@ namespace NEP.ScoreLab.HUD
                 hud.gameObject.SetActive(false);
             }
         }
+
+        public static void HUDShowModeUpdated(HUDShowMode mode)
+        {
+            if (ActiveHUD == null)
+            {
+                return;
+            }
+            
+            if (mode == HUDShowMode.Always)
+            {
+                ActiveHUD.gameObject.SetActive(true);
+            }
+            else if (mode == HUDShowMode.Never)
+            {
+                ActiveHUD.gameObject.SetActive(false);
+            }
+        }
         
+        [NEConsoleCommand("scorelab.load")]
         public static void LoadHUD(string name)
         {
             if (ActiveHUD != null)
@@ -86,6 +105,7 @@ namespace NEP.ScoreLab.HUD
             ActiveHUD.SetParent(null);
         }
 
+        [NEConsoleCommand("scorelab.unload")]
         public static void UnloadHUD()
         {
             if(ActiveHUD != null)

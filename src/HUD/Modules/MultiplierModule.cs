@@ -50,7 +50,7 @@ namespace NEP.ScoreLab.HUD
 
             if (_timeBar != null)
             {
-                if (_packedMultiplier.Condition != null)
+                if (_packedMultiplier.Condition != string.Empty)
                 {
                     _timeBar.gameObject.SetActive(false);
                 }

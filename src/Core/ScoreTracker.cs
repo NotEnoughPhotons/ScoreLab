@@ -1,3 +1,4 @@
+using NEP.NEDebug.Console;
 using NEP.ScoreLab.Data;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -50,7 +51,8 @@ namespace NEP.ScoreLab.Core
                 ActiveValues[i].OnUpdate();
             }
         }
-
+        
+        [NEConsoleCommand("scorelab.add")]
         public static void Add(string eventType)
         {
             Add(Create(eventType));
@@ -112,12 +114,14 @@ namespace NEP.ScoreLab.Core
             _multiplier = multiplier;
         }
 
+        [NEConsoleCommand("scorelab.reset_score")]
         public static void ResetScore()
         {
             _score = 0;
             _lastScore = 0;
         }
 
+        [NEConsoleCommand("scorelab.reset_multiplier")]
         public static void ResetMultiplier()
         {
             _multiplier = 1f;

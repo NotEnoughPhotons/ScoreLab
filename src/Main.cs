@@ -7,6 +7,7 @@ using NEP.ScoreLab.Data;
 using NEP.ScoreLab.HUD;
 using NEP.ScoreLab.Patches;
 using NEP.ScoreLab.Menu;
+using EventType = NEP.ScoreLab.Data.EventType;
 
 [assembly: MelonInfo(typeof(NEP.ScoreLab.Main), "ScoreLab", "1.0.0", "Not Enough Photons")]
 [assembly: MelonGame("Stress Level Zero", "BONELAB")]
