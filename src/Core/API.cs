@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-
 using NEP.ScoreLab.Data;
-using NEP.ScoreLab.UI;
+using NEP.ScoreLab.HUD;
 
 namespace NEP.ScoreLab.Core
 {
@@ -44,6 +41,8 @@ namespace NEP.ScoreLab.Core
                 { "IsPlayerMoving", new Func<bool>(() => ScoreDirector.IsPlayerMoving) },
                 { "IsPlayerSeated", new Func<bool>(() => ScoreDirector.IsPlayerSeated) },
                 { "IsPlayerInAir", new Func<bool>(() => ScoreDirector.IsPlayerInAir) },
+                { "IsPlayerRagdolled", new Func<bool>(() => ScoreDirector.IsPlayerRagdolled) },
+                { "IsSlowMoEnabled", new Func<bool>(() => ScoreDirector.IsSlowMoEnabled) }
             };
 
             public static Func<bool> GetCondition(string cond)
@@ -62,21 +61,13 @@ namespace NEP.ScoreLab.Core
             }
         }
 
-        public static class Settings
-        {
-            public static class Audio
-            {
-                public static bool PlayTierAudio = true;
-            }
-        }
-
         public static class UI
         {
-            public static Action<UIModule> OnModuleEnabled;
-            public static Action<UIModule> OnModuleDisabled;
+            public static Action<Module> OnModuleEnabled;
+            public static Action<Module> OnModuleDisabled;
 
-            public static Action<UIModule> OnModuleDecayed;
-            public static Action<UIModule> OnModulePostDecayed;
+            public static Action<Module> OnModuleDecayed;
+            public static Action<Module> OnModulePostDecayed;
         }
     }
 }

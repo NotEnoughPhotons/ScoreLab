@@ -1,10 +1,17 @@
-﻿using BoneLib;
-using NEP.ScoreLab.Data;
-using PuppetMasta;
-using System.Reflection;
+﻿using UnityEngine;
 
-using SLZ.Rig;
-using SLZ.Vehicle;
+using BoneLib;
+
+using Il2CppSLZ.Bonelab;
+using Il2CppSLZ.Marrow;
+using Il2CppSLZ.Marrow.PuppetMasta;
+using Il2CppSLZ.Marrow.AI;
+using Il2CppSLZ.Marrow.Interaction;
+using Il2CppTriangleNet;
+using NEP.ScoreLab.Data;
+
+using Avatar = Il2CppSLZ.VRMK.Avatar;
+using EventType = NEP.ScoreLab.Data.EventType;
 
 namespace NEP.ScoreLab.Core
 {
@@ -12,6 +19,74 @@ namespace NEP.ScoreLab.Core
     {
         public static class Patches
         {
+            [HarmonyLib.HarmonyPatch(typeof(Projectile), nameof(Projectile.Awake))]
+            public static class ProjectilePatch
+            {
+                public static void Postfix(Projectile __instance)
+                {
+                    Action<Collider, Vector3, Vector3> action = OnProjectileCollision;
+                    __instance.onCollision.AddListener(action);
+                }
+
+                private static void OnProjectileCollision(Collider collider, Vector3 world, Vector3 normal)
+                {
+                    MarrowBody head = MarrowBody.Cache.Get(collider.gameObject);
+
+                    if (head == null)
+                    {
+                        return;
+                    }
+                    
+                    TriggerRefProxy proxy = head.GetComponent<TriggerRefProxy>();
+
+                    if (proxy == null)
+                    {
+                        return;
+                    }
+
+                    if (proxy.aiManager.isDead)
+                    {
+                        return;
+                    }
+                    
+                    if (proxy.targetHead.gameObject == head.gameObject)
+                    {
+                        ScoreTracker.Add(EventType.Score.Headshot);
+                    }
+                }
+            }
+            
+            [HarmonyLib.HarmonyPatch(typeof(RigManager), nameof(RigManager.SwitchAvatar))]
+            public static class RigManagerSwapAvatarPatch
+            {
+                public static void Postfix(Avatar newAvatar)
+                {
+                    _playerRecentlySwappedAvatars = true;
+                }
+            }
+            
+            [HarmonyLib.HarmonyPatch(typeof(BehaviourCrablet))]
+            [HarmonyLib.HarmonyPatch(nameof(BehaviourCrablet.AttachToFace))]
+            public static class CrabletAttachToFacePatch
+            {
+                public static void Postfix(Rigidbody face, TriggerRefProxy trp, bool preAttach = false, bool isPlayer = true)
+                {
+                    if (isPlayer)
+                    {
+                        return;
+                    }
+
+                    if (trp.npcType == TriggerRefProxy.NpcType.Crablet)
+                    {
+                        ScoreTracker.Add(EventType.Score.Crabcest);
+                    }
+                    else
+                    {
+                        ScoreTracker.Add(EventType.Score.Facehug);
+                    }
+                }
+            }
+            
             [HarmonyLib.HarmonyPatch(typeof(Seat))]
             [HarmonyLib.HarmonyPatch(nameof(Seat.Register))]
             public static class RegisterSeatPatch
@@ -19,7 +94,7 @@ namespace NEP.ScoreLab.Core
                 public static void Postfix(RigManager rM)
                 {
                     IsPlayerSeated = true;
-                    ScoreTracker.Instance.Add(EventType.Mult.Seated);
+                    ScoreTracker.Add(EventType.Mult.Seated);
                 }
             }
 
@@ -39,17 +114,27 @@ namespace NEP.ScoreLab.Core
             {
                 public static void Postfix()
                 {
-                    ScoreTracker.Instance.Add(EventType.Mult.SecondWind);
+                    ScoreTracker.Add(EventType.Mult.SecondWind);
                 }
             }
 
             [HarmonyLib.HarmonyPatch(typeof(Arena_GameController))]
-            [HarmonyLib.HarmonyPatch(nameof(Arena_GameController.EndOfRound))]
-            public static class EndOfRoundPatch
+            [HarmonyLib.HarmonyPatch(nameof(Arena_GameController.StartNextWave))]
+            public static class StartNextWavePatch
             {
-                public static void Postfix()
+                public static void Postfix(Arena_GameController __instance)
                 {
-                    ScoreTracker.Instance.Add(EventType.Score.GameRoundCompleted);
+                    ScoreTracker.Add(EventType.Score.GameWaveCompleted);
+                }
+            }
+            
+            [HarmonyLib.HarmonyPatch(typeof(Arena_GameController))]
+            [HarmonyLib.HarmonyPatch(nameof(Arena_GameController.EndOfRound))]
+            public static class StartNextRoundPatch
+            {
+                public static void Postfix(Arena_GameController __instance)
+                {
+                    ScoreTracker.Add(EventType.Score.GameRoundCompleted);
                 }
             }
 
@@ -57,9 +142,13 @@ namespace NEP.ScoreLab.Core
             [HarmonyLib.HarmonyPatch(nameof(PhysicsRig.OnUpdate))]
             public static class PhysRigPatch
             {
-                private static bool _targetBool;
+                private static bool _midAirTargetBool;
                 private static float _tMidAirDelay = 0.5f;
-                private static float _tTime;
+                private static float _tAirTime;
+
+                private static bool _ragdolledTargetBool;
+                private static float _tRagdollDelay = 0.5f;
+                private static float _tRagdollTime;
 
                 public static void Postfix(PhysicsRig __instance)
                 {
@@ -67,22 +156,90 @@ namespace NEP.ScoreLab.Core
 
                     if (IsPlayerInAir)
                     {
-                        if (!_targetBool)
+                        if (!_midAirTargetBool)
                         {
-                            _tTime += UnityEngine.Time.deltaTime;
+                            _tAirTime += Time.deltaTime;
 
-                            if(_tTime > _tMidAirDelay)
+                            if(_tAirTime > _tMidAirDelay)
                             {
-                                ScoreTracker.Instance.Add(EventType.Mult.MidAir);
-                                _targetBool = true;
+                                ScoreTracker.Add(EventType.Mult.MidAir);
+                                _midAirTargetBool = true;
                             }
                         }
                     }
                     else
                     {
-                        _tTime = 0f;
-                        _targetBool = false;
+                        _tAirTime = 0f;
+                        _midAirTargetBool = false;
                     }
+
+                    if (IsPlayerRagdolled)
+                    {
+                        if (!_ragdolledTargetBool)
+                        {
+                            // ScoreTracker.Instance.Add(Data.EventType.Mult.Ragolled);
+                            _ragdolledTargetBool = true;
+                        }
+                    }
+                    else
+                    {
+                        _ragdolledTargetBool = false;
+                    }
+
+                    if (_playerRecentlySwappedAvatars)
+                    {
+                        ScoreTracker.Add(EventType.Mult.SwappedAvatars);
+                        _playerRecentlySwappedAvatars = false;
+                    }
+                }
+            }
+
+            [HarmonyLib.HarmonyPatch(typeof(PhysicsRig))]
+            [HarmonyLib.HarmonyPatch(nameof(PhysicsRig.RagdollRig))]
+            public static class PhysRigRagdollPatch
+            {
+                public static void Postfix(PhysicsRig __instance)
+                {
+                    IsPlayerRagdolled = true;
+                }
+            }
+
+            [HarmonyLib.HarmonyPatch(typeof(PhysicsRig))]
+            [HarmonyLib.HarmonyPatch(nameof(PhysicsRig.UnRagdollRig))]
+            public static class PhysRigUnRagdollPatch
+            {
+                public static void Postfix(PhysicsRig __instance)
+                {
+                    IsPlayerRagdolled = false;
+                }
+            }
+
+            [HarmonyLib.HarmonyPatch(typeof(TimeManager), nameof(TimeManager.OnPostTimeUpdate))]
+            public static class TimeManagerUpdatePatch
+            {
+                private static bool _slowmoSwitch = false;
+                
+                public static void Postfix()
+                {
+                    
+                }
+            }
+            
+            [HarmonyLib.HarmonyPatch(typeof(TimeManager), nameof(TimeManager.INCREASE_TIMESCALE))]
+            public static class TimeManagerIncreaseTimePatch
+            {
+                public static void Postfix()
+                {
+                    
+                }
+            }
+            
+            [HarmonyLib.HarmonyPatch(typeof(TimeManager), nameof(TimeManager.DECREASE_TIMESCALE))]
+            public static class TimeManagerDecreaseTimePatch
+            {
+                public static void Postfix()
+                {
+                    
                 }
             }
 
@@ -93,18 +250,29 @@ namespace NEP.ScoreLab.Core
 
             public static void OnAIDeath(BehaviourBaseNav behaviour)
             {
+                ScoreTracker.Add(ValueManager.Get(EventType.Score.Kill));
+                ScoreTracker.Add(ValueManager.Get(EventType.Mult.Kill));
+                
                 if(!behaviour.sensors.isGrounded)
                 {
-                    ScoreTracker.Instance.Add(EventType.Score.EnemyMidAirKill);
+                    ScoreTracker.Add(EventType.Score.EnemyMidAirKill);
                 }
 
-                ScoreTracker.Instance.Add(EventType.Score.Kill);
-                ScoreTracker.Instance.Add(EventType.Mult.Kill);
+                if (behaviour.sensors.target == null)
+                {
+                    ScoreTracker.Add(EventType.Score.StealthKill);
+                }
             }
         }
 
+        public static readonly string PlayerName = "";
+        
         public static bool IsPlayerMoving = false;
         public static bool IsPlayerInAir = false;
         public static bool IsPlayerSeated = false;
+        public static bool IsPlayerRagdolled = false;
+        public static bool IsSlowMoEnabled = false;
+
+        private static bool _playerRecentlySwappedAvatars = false;
     }
 }

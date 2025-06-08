@@ -1,6 +1,6 @@
 namespace NEP.ScoreLab.Data
 {
-    [System.Serializable]
+    [Serializable]
     public class PackedValue
     {
         public enum PackedType
@@ -21,7 +21,7 @@ namespace NEP.ScoreLab.Data
         public string eventType;
         public string TierEventType;
 
-        public UnityEngine.AudioClip EventAudio;
+        public PackedAudioParams EventAudio;
 
         public bool Stackable;
 
@@ -35,15 +35,18 @@ namespace NEP.ScoreLab.Data
         {
             get
             {
+                if (Tiers == null || Tiers.Length == 0)
+                {
+                    return this;
+                }
+                
                 if (_tierIndex == Tiers.Length)
                 {
                     _tierIndex = Tiers.Length;
                     return Tiers[_tierIndex];
                 }
-                else
-                {
-                    return Tiers[_tierIndex];
-                }
+                
+                return Tiers[_tierIndex];
             }
         }
         public PackedValue NextTier

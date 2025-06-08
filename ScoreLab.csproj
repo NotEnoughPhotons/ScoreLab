@@ -1,170 +1,161 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C33921DC-5778-4EEC-A2D0-E0AE522CC701}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NEP.ScoreLab</RootNamespace>
-    <AssemblyName>ScoreLab</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <LangVersion>10</LangVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="src\Audio\AudioManager.cs" />
-    <Compile Include="src\Audio\PooledAudio.cs" />
-    <Compile Include="src\Core\API.cs" />
-    <Compile Include="src\Core\ScoreDirector.cs" />
-    <Compile Include="src\Core\ScoreTracker.cs" />
-    <Compile Include="src\Data\DataManager.cs" />
-    <Compile Include="src\Data\JSON\JSONMult.cs" />
-    <Compile Include="src\Data\JSON\JSONScore.cs" />
-    <Compile Include="src\Data\MarrowSceneInfo.cs" />
-    <Compile Include="src\Data\Packages\EventType.cs" />
-    <Compile Include="src\Data\Packages\PackedHighScore.cs" />
-    <Compile Include="src\Data\Packages\PackedMultiplier.cs" />
-    <Compile Include="src\Data\Packages\PackedScore.cs" />
-    <Compile Include="src\Data\Packages\PackedValue.cs" />
-    <Compile Include="src\Main.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\Patches\Hooks.cs" />
-    <Compile Include="src\UI\Modules\UIModule.cs" />
-    <Compile Include="src\UI\Modules\UIModuleAnimator.cs" />
-    <Compile Include="src\UI\Modules\UIMultiplierModule.cs" />
-    <Compile Include="src\UI\Modules\UIScoreModule.cs" />
-    <Compile Include="src\UI\Modules\UIValueTween.cs" />
-    <Compile Include="src\UI\UIDescriptorList.cs" />
-    <Compile Include="src\UI\UIController.cs" />
-    <Compile Include="src\UI\UIManager.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="AudioImportLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\AudioImportLib.dll</HintPath>
-    </Reference>
-    <Reference Include="BoneLib, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\BoneLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Il2Cppmscorlib, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
-    </Reference>
-    <Reference Include="MelonLoader, Version=0.5.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\MelonLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SLZ.Marrow, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\SLZ.Marrow.dll</HintPath>
-    </Reference>
-    <Reference Include="SLZ.Marrow.SDK, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\SLZ.Marrow.SDK.dll</HintPath>
-    </Reference>
-    <Reference Include="UnhollowerBaseLib, Version=0.4.18.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnhollowerBaseLib.dll</HintPath>
-    </Reference>
-    <Reference Include="UnhollowerRuntimeLib, Version=0.4.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnhollowerRuntimeLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Collections">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\Unity.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.InputSystem, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\Unity.InputSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.AnimationModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.AudioModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.InputLegacyModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.PhysicsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.UIModule.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
-"C:\Program Files (x86)\Steam\steamapps\common\BONELAB\BONELAB_Steam_Windows64.exe"</PostBuildEvent>
-  </PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<RootNamespace>ScoreLab</RootNamespace>
+		<LangVersion>default</LangVersion>
+		<IsPackable>false</IsPackable>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<AssemblyName>ScoreLab</AssemblyName>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+	<ItemGroup>
+	  <EmbeddedResource Remove="Properties\**" />
+	  <None Remove="Properties\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Include="src\Audio\AudioManager.cs" />
+	  <Compile Include="src\Core\API.cs" />
+	  <Compile Include="src\Core\ScoreDirector.cs" />
+	  <Compile Include="src\Core\ScoreTracker.cs" />
+	  <Compile Include="src\Core\Settings.cs" />
+	  <Compile Include="src\Data\HUDLoader.cs" />
+	  <Compile Include="src\Data\JSON\JSONAudioParams.cs" />
+	  <Compile Include="src\Data\JSON\JSONHudManifest.cs" />
+	  <Compile Include="src\Data\JSON\JSONMult.cs" />
+	  <Compile Include="src\Data\JSON\JSONScore.cs" />
+	  <Compile Include="src\Data\MarrowSceneInfo.cs" />
+	  <Compile Include="src\Data\Packages\EventType.cs" />
+	  <Compile Include="src\Data\Packages\PackedAudioParams.cs" />
+	  <Compile Include="src\Data\Packages\PackedHighScore.cs" />
+	  <Compile Include="src\Data\Packages\PackedMultiplier.cs" />
+	  <Compile Include="src\Data\Packages\PackedScore.cs" />
+	  <Compile Include="src\Data\Packages\PackedValue.cs" />
+	  <Compile Include="src\Data\ValueManager.cs" />
+	  <Compile Include="src\Data\ValuePackage.cs" />
+	  <Compile Include="src\HUD\HUDShowMode.cs" />
+	  <Compile Include="src\Main.cs" />
+	  <Compile Include="src\Menu\SLMenu.cs" />
+	  <Compile Include="src\Patches\Hooks.cs" />
+	  <Compile Include="src\HUD\Modules\Module.cs" />
+	  <Compile Include="src\HUD\Modules\ModuleAnimator.cs" />
+	  <Compile Include="src\HUD\Modules\MultiplierModule.cs" />
+	  <Compile Include="src\HUD\Modules\ScoreModule.cs" />
+	  <Compile Include="src\HUD\HUD.cs" />
+	  <Compile Include="src\HUD\DescriptorList.cs" />
+	  <Compile Include="src\HUD\HUDManager.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Assembly-CSharp">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="BoneLib">
+		  <HintPath>$(BONELAB_DIR)\Mods\BoneLib.dll</HintPath>
+		</Reference>
+		<Reference Include="NEDebug">
+			<HintPath>$(BONELAB_DIR)\Mods\NEDebug.dll</HintPath>
+		</Reference>
+		<Reference Include="AudioImportLib">
+			<HintPath>$(BONELAB_DIR)\Mods\AudioImportLib.dll</HintPath>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\net6\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="Il2Cppmscorlib">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+		</Reference>
+		<Reference Include="Il2CppRootMotion">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppRootMotion.dll</HintPath>
+		</Reference>
+		<Reference Include="Il2CppSLZ.Marrow">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSLZ.Marrow.dll</HintPath>
+		</Reference>
+		<Reference Include="Il2CppSystem.Core">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="Il2CppSystem">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.dll</HintPath>
+		</Reference>
+		<Reference Include="Il2CppUltEvents">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppUltEvents.dll</HintPath>
+		</Reference>
+		<Reference Include="Il2Cpp__Generated">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2Cpp__Generated.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.TextMeshPro">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AIModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.AIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AnimationModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.AnimationModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AssetBundleModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.AssetBundleModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AudioModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.AudioModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.InputLegacyModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.InputLegacyModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.InputModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.InputModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.PhysicsModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.PhysicsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UI">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UIElementsModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.UIElementsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UIElementsNativeModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.UIElementsNativeModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UIModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.UIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.VRModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.VRModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.XRModule">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.XRModule.dll</HintPath>
+		</Reference>
+		<Reference Include="MelonLoader">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\net6\MelonLoader.dll</HintPath>
+		</Reference>
+		<Reference Include="0Harmony">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\net6\0Harmony.dll</HintPath>
+		</Reference>
+		<Reference Include="Il2CppInterop.Runtime">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Il2CppInterop.Common">
+			<HintPath>$(BONELAB_DIR)\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
+		</Reference>
+
+	</ItemGroup>
+
+	<PropertyGroup>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	</PropertyGroup>
+	
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="COPY &quot;$(TargetPath)&quot; &quot;$(BONELAB_DIR)\Mods&quot;" />
+	</Target>
 </Project>
