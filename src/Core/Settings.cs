@@ -44,19 +44,25 @@ namespace NEP.ScoreLab.Core
             m_scorelabCategory.SaveToFile(log);
         }
 
+        #if DEBUG
         [NEConsoleCommand("scorelab.set_cam_dist")]
+        #endif
         public static void SetDistanceToCamera(float distance)
         {
             m_eDistanceToCamera.Value = distance;
         }
 
+        #if DEBUG
         [NEConsoleCommand("scorelab.set_movement_smoothness")]
+        #endif
         public static void SetMovementSmoothness(float movementSmoothness)
         {
             m_eMovementSmoothness.Value = movementSmoothness;
         }
 
+        #if DEBUG
         [NEConsoleCommand("scorelab.use_announcer")]
+        #endif
         public static void SetUseAnnouncer(bool useAnnouncer)
         {
             m_eUseAnnouncer.Value = useAnnouncer;

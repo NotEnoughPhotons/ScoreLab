@@ -52,7 +52,9 @@ namespace NEP.ScoreLab.Core
             }
         }
         
+        #if DEBUG
         [NEConsoleCommand("scorelab.add")]
+        #endif
         public static void Add(string eventType)
         {
             Add(Create(eventType));
@@ -114,14 +116,18 @@ namespace NEP.ScoreLab.Core
             _multiplier = multiplier;
         }
 
+        #if DEBUG
         [NEConsoleCommand("scorelab.reset_score")]
+        #endif
         public static void ResetScore()
         {
             _score = 0;
             _lastScore = 0;
         }
 
+        #if DEBUG
         [NEConsoleCommand("scorelab.reset_multiplier")]
+        #endif
         public static void ResetMultiplier()
         {
             _multiplier = 1f;

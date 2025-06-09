@@ -75,7 +75,9 @@ namespace NEP.ScoreLab.HUD
             }
         }
         
+        #if DEBUG
         [NEConsoleCommand("scorelab.load")]
+        #endif
         public static void LoadHUD(string name)
         {
             if (ActiveHUD != null)
@@ -105,7 +107,9 @@ namespace NEP.ScoreLab.HUD
             ActiveHUD.SetParent(null);
         }
 
+        #if DEBUG
         [NEConsoleCommand("scorelab.unload")]
+        #endif
         public static void UnloadHUD()
         {
             if(ActiveHUD != null)
