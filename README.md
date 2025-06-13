@@ -20,3 +20,9 @@ Installation of this mod is split between two platforms, but follow the same pro
 HUDs must be installed in a created folder in UserData.
 1. Drag and drop the installed HUD folder into ``UserData/Not Enough Photons/ScoreLab``
 2. Profit.
+
+# Bundled Custom HUDs
+ScoreLab currently comes bundled with three custom HUDs for you to play around with!
+## <img style="width: 300px" src="https://github.com/NotEnoughPhotons/ScoreLab/blob/dev/img/coda_logo.png">
+## <img style="width: 300px" src="https://github.com/NotEnoughPhotons/ScoreLab/blob/dev/img/tabloid_logo.png">
+## <img style="width: 300px" src="https://github.com/NotEnoughPhotons/ScoreLab/blob/dev/img/balatro_logo.png">
