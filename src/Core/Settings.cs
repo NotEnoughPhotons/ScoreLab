@@ -1,5 +1,7 @@
 ﻿using MelonLoader;
+#if DEBUG
 using NEP.NEDebug.Console;
+#endif
 using NEP.ScoreLab.HUD;
 
 namespace NEP.ScoreLab.Core
