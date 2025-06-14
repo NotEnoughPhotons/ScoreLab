@@ -1,7 +1,9 @@
+#if DEBUG
 using NEP.NEDebug.Console;
+#endif
+
 using NEP.ScoreLab.Data;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace NEP.ScoreLab.Core
 {
@@ -40,12 +42,7 @@ namespace NEP.ScoreLab.Core
             {
                 return;
             }
-            
-            if (Input.GetKeyDown(KeyCode.RightBracket))
-            {
-                Add(ValueManager.Get(Data.EventType.Mult.Kill));
-            }
-            
+
             for (int i = 0; i < ActiveValues.Count; i++)
             {
                 ActiveValues[i].OnUpdate();
@@ -131,6 +128,18 @@ namespace NEP.ScoreLab.Core
         public static void ResetMultiplier()
         {
             _multiplier = 1f;
+        }
+
+        #if DEBUG
+        [NEConsoleCommand("scorelab.reset_all")]
+        #endif
+        public static void ResetAll()
+        {
+            ResetScore();
+            ResetMultiplier();
+            ResetHighScore();
+
+            ActiveValues.Clear();
         }
 
         public static void ResetHighScore()

@@ -55,19 +55,10 @@ namespace NEP.ScoreLab
             HUDManager.Initialize();
             
             // TODO: Add high scores, and add an option to reset level progress
-            ScoreTracker.ResetScore();
-            ScoreTracker.ResetMultiplier();
+            ScoreTracker.ResetAll();
         }
 
-        public override void OnUpdate()
-        {
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.F5))
-            {
-                HUDLoader.ReloadHUDs();
-            }
-            
-            ScoreTracker.Update();
-        }
+        public override void OnUpdate() => ScoreTracker.Update();
 
         public override void OnDeinitializeMelon()
         {
