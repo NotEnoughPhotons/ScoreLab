@@ -1,5 +1,6 @@
 using BoneLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using MelonLoader;
 using UnityEngine;
 
 using MelonLoader.Utils;
@@ -66,9 +67,19 @@ namespace NEP.ScoreLab.Data
                 // Check file extension for the bundle and manifest
                 foreach (var file in files)
                 {
-                    if (file.EndsWith(".hud"))
+                    if (!HelperMethods.IsAndroid())
                     {
-                        hud = file;
+                        if (file.EndsWith("_pcvr.hud"))
+                        {
+                            hud = file;
+                        }
+                    }
+                    else
+                    {
+                        if (file.EndsWith("_quest.hud"))
+                        {
+                            hud = file;
+                        }
                     }
 
                     if (file.EndsWith(".hud_manifest"))
@@ -96,7 +107,7 @@ namespace NEP.ScoreLab.Data
                     continue;
                 }
 
-                // Load the HUD bundle
+                // Load the HUD bundle for the correct platform
                 AssetBundle hudBundle = AssetBundle.LoadFromFile(hud);
                     
                 // Check if the bundle has a valid HUD object
