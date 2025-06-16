@@ -37,6 +37,7 @@
 	  <Compile Include="src\Data\Packages\PackedValue.cs" />
 	  <Compile Include="src\Data\ValueManager.cs" />
 	  <Compile Include="src\Data\ValuePackage.cs" />
+	  <Compile Include="src\HUD\HUDEvents.cs" />
 	  <Compile Include="src\HUD\HUDShowMode.cs" />
 	  <Compile Include="src\HUD\HUDSpriteText.cs" />
 	  <Compile Include="src\HUD\HUDText.cs" />
