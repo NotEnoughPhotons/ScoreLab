@@ -1,3 +1,4 @@
+using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 
 using NEP.ScoreLab.Core;
@@ -43,6 +44,7 @@ namespace NEP.ScoreLab.HUD
             Animator.Play(name, -1, 0f);
         }
 
+        [HideFromIl2Cpp]
         private void OnModuleEnabled(Module module)
         {
             if (_module != module)
@@ -65,6 +67,7 @@ namespace NEP.ScoreLab.HUD
             PlayAnimation("tier_reached");
         }
 
+        [HideFromIl2Cpp]
         private void OnModuleDecayed(Module module)
         {
             if (_module != module)

@@ -1,3 +1,4 @@
+using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 
 using NEP.ScoreLab.Core;
@@ -10,8 +11,13 @@ namespace NEP.ScoreLab.HUD
     {
         public HUD(System.IntPtr ptr) : base(ptr) { }
 
+        [HideFromIl2Cpp]
         public Module ScoreModule { get; set; }
+        
+        [HideFromIl2Cpp]
         public Module MultiplierModule { get; set; }
+        
+        [HideFromIl2Cpp]
         public Module HighScoreModule { get; set; }
 
         public Transform followTarget;
@@ -76,16 +82,19 @@ namespace NEP.ScoreLab.HUD
             transform.SetParent(parent);
         }
 
+        [HideFromIl2Cpp]
         public void SetScoreModule(Module module)
         {
             this.ScoreModule = module;
         }
 
+        [HideFromIl2Cpp]
         public void SetMultiplierModule(Module module)
         {
             this.MultiplierModule = module;
         }
 
+        [HideFromIl2Cpp]
         public void UpdateModule(PackedValue data)
         {
             if (data is PackedScore)

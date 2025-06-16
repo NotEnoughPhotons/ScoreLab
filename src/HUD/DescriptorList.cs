@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 
 using NEP.ScoreLab.Core;
@@ -65,6 +66,7 @@ namespace NEP.ScoreLab.HUD
             this.packedType = (PackedValue.PackedType)packedType;
         }
 
+        [HideFromIl2Cpp]
         public void SetModuleActive(PackedValue value)
         {
             if (Modules == null || Modules.Count == 0)

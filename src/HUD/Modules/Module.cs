@@ -1,5 +1,5 @@
 using System;
-
+using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +23,7 @@ namespace NEP.ScoreLab.HUD
 
         public UIModuleType ModuleType;
 
+        [HideFromIl2Cpp]
         public PackedValue PackedValue { get => _packedValue; }
 
         public virtual PackedValue.PackedType PackedType { get => PackedValue.PackedType.Base; }
@@ -31,10 +32,11 @@ namespace NEP.ScoreLab.HUD
         public float DecayTime { get => _decayTime; }
         public float PostDecayTime { get => _postDecayTime; }
 
-        protected TextMeshProUGUI _title { get; private set; }
-        protected TextMeshProUGUI _value { get; private set; }
+        protected HUDText _title { get; private set; }
+        protected HUDText _value { get; private set; }
         protected Slider _timeBar { get; private set; }
 
+        [HideFromIl2Cpp]
         protected PackedValue _packedValue { get; private set; }
 
         protected bool _canDecay { get; private set; }
@@ -59,6 +61,7 @@ namespace NEP.ScoreLab.HUD
 
         public virtual void OnUpdate() { }
 
+        [HideFromIl2Cpp]
         public void AssignPackedData(PackedValue packedValue)
         {
             if(packedValue == null)
@@ -96,34 +99,37 @@ namespace NEP.ScoreLab.HUD
             return _reachedPostDecay;
         }
 
-        protected void SetText(TextMeshProUGUI text, string value)
+        [HideFromIl2Cpp]
+        protected void SetText(HUDText text, string value)
         {
             if (text == null)
             {
                 return;
             }
 
-            text.text = value;
+            text.Set(value);
         }
 
-        protected void SetText(TextMeshProUGUI text, int value)
+        [HideFromIl2Cpp]
+        protected void SetText(HUDText text, int value)
         {
             if (text == null)
             {
                 return;
             }
 
-            SetText(text, value.ToString());
+            text.Set(value.ToString());
         }
 
-        protected void SetText(TextMeshProUGUI text, float value)
+        [HideFromIl2Cpp]
+        protected void SetText(HUDText text, float value)
         {
             if (text == null)
             {
                 return;
             }
 
-            SetText(text, value.ToString());
+            text.Set(value.ToString());
         }
 
         protected void SetBarValue(Slider timeBar, float value)
@@ -189,8 +195,8 @@ namespace NEP.ScoreLab.HUD
             Transform valueTran = transform.Find(Path_ValueText);
             Transform timeBarTran = transform.Find(Path_TimeBar);
 
-            _title = titleTran?.GetComponent<TextMeshProUGUI>();
-            _value = valueTran?.GetComponent<TextMeshProUGUI>();
+            _title = titleTran?.GetComponent<HUDText>();
+            _value = valueTran?.GetComponent<HUDText>();
             _timeBar = timeBarTran?.GetComponent<Slider>();
         }
 

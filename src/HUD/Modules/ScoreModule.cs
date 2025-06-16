@@ -1,3 +1,4 @@
+using Il2CppInterop.Runtime.Attributes;
 using Il2CppSystem.Reflection;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace NEP.ScoreLab.HUD
     {
         public ScoreModule(System.IntPtr ptr) : base(ptr) { }
 
+        [HideFromIl2Cpp]
         private PackedScore _packedScore { get => (PackedScore)_packedValue; }
 
         private float _targetValue;

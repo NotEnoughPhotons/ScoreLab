@@ -1,4 +1,5 @@
-﻿using NEP.ScoreLab.Core;
+﻿using Il2CppInterop.Runtime.Attributes;
+using NEP.ScoreLab.Core;
 using NEP.ScoreLab.Data;
 
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace NEP.ScoreLab.HUD
     {
         public MultiplierModule(System.IntPtr ptr) : base(ptr) { }
 
+        [HideFromIl2Cpp]
         private PackedMultiplier _packedMultiplier { get => (PackedMultiplier)_packedValue; }
 
         private float _currentValue;
