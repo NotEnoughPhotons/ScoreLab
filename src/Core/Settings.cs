@@ -43,6 +43,7 @@ namespace NEP.ScoreLab.Core
             m_eMovementSmoothness.Value = MovementSmoothness;
             m_eUseAnnouncer.Value = UseAnnouncer;
             m_eSavedHUD.Value = SavedHUD;
+            m_eHudShowMode.Value = (int)HUDShowMode;
             m_scorelabCategory.SaveToFile(log);
         }
 
@@ -69,11 +70,22 @@ namespace NEP.ScoreLab.Core
         {
             m_eUseAnnouncer.Value = useAnnouncer;
         }
-
+        
         public static void SetHUDShowMode(HUDShowMode mode)
         {
+            HUDShowMode = mode;
             m_eHudShowMode.Value = (int)mode;
-            HUDManager.HUDShowModeUpdated(mode);
+            HUDManager.HUDShowModeUpdated((HUDShowMode)m_eHudShowMode.Value);
+        }
+
+        #if DEBUG
+        [NEConsoleCommand("scorelab.set_show_mode")]
+        #endif
+        public static void SetHUDShowModeConsole(int mode)
+        {
+            HUDShowMode = (HUDShowMode)mode;
+            m_eHudShowMode.Value = mode;
+            HUDManager.HUDShowModeUpdated((HUDShowMode)mode);
         }
     }
 }

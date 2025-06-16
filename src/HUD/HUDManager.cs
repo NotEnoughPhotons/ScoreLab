@@ -86,6 +86,7 @@ namespace NEP.ScoreLab.HUD
             }
             
             UnloadHUD();
+            
             foreach (var hud in LoadedHUDs)
             {
                 if (hud.name == name)
@@ -103,7 +104,7 @@ namespace NEP.ScoreLab.HUD
             Settings.SavedHUD = name;
             ValueManager.UsePackage(name);
             
-            ActiveHUD.gameObject.SetActive(true);
+            HUDShowModeUpdated(Settings.HUDShowMode);
             ActiveHUD.SetParent(null);
         }
 
