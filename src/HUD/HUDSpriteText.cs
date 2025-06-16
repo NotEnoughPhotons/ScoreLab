@@ -48,6 +48,11 @@ namespace NEP.ScoreLab.HUD
 
             for (int i = 0; i < text.Length; i++)
             {
+                if (!char.IsDigit(text[i]))
+                {
+                    continue;
+                }
+                
                 int spriteIndex = int.Parse(text[i].ToString());
                 m_stringBuilder.Append("<sprite index=");
                 m_stringBuilder.Append(spriteIndex);
